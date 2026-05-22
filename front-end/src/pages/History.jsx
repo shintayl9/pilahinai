@@ -3,6 +3,8 @@ import {
   useState,
 } from "react";
 
+import axios from "axios";
+
 import {
   useNavigate,
 } from "react-router-dom";
@@ -43,17 +45,36 @@ function History() {
 
   useEffect(() => {
 
-    const savedHistory =
-      JSON.parse(
-        localStorage.getItem("history")
-      ) || [];
+    const fetchHistory = async () => {
+
+      try {
+
+        const response =
+          await axios.get(
+            "http://localhost:5000/history"
+          );
+
+        setHistoryData(
+          response.data.data
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Gagal mengambil history:",
+          error
+        );
+
+      }
+
+    };
 
     const savedLastRead =
       localStorage.getItem("lastRead");
 
-    setHistoryData(savedHistory);
-
     setLastRead(savedLastRead || "");
+
+    fetchHistory();
 
   }, []);
 
@@ -92,7 +113,7 @@ function History() {
     navigate("/hasil", {
       state: {
         hasil:
-          item.hasil.toLowerCase(),
+          item.category.toLowerCase(),
         image:
           item.image,
       },
@@ -152,25 +173,34 @@ function History() {
 
   // ===== DELETE ONE =====
 
-  const deleteOne = (
+  const deleteOne = async (
     e,
-    date
+    id
   ) => {
 
     e.stopPropagation();
 
-    const updatedHistory =
-      historyData.filter(
-        (item) =>
-          item.date !== date
+    try {
+
+      await axios.delete(
+        `http://localhost:5000/history/${id}`
       );
 
-    setHistoryData(updatedHistory);
+      const updatedHistory =
+        historyData.filter(
+          (item) => item.id !== id
+        );
 
-    localStorage.setItem(
-      "history",
-      JSON.stringify(updatedHistory)
-    );
+      setHistoryData(updatedHistory);
+
+    } catch (error) {
+
+      console.error(
+        "Gagal menghapus history:",
+        error
+      );
+
+    }
 
   };
 
@@ -301,7 +331,7 @@ function History() {
               setCurrentPage((prev) =>
                 (prev + 1) *
                   itemsPerPage <
-                historyData.length
+                  historyData.length
                   ? prev + 1
                   : prev
               )
@@ -321,7 +351,9 @@ function History() {
               (item, index) => {
 
                 const splitDate =
-                  item.date.split(",");
+                  item.date
+                    ? item.date.split(",")
+                    : ["Tanggal", "Tidak ada"];
 
                 const isNewest =
                   historyData[0]?.date ===
@@ -343,38 +375,33 @@ function History() {
                   <div
                     className={`history-card
 
-                      ${
-                        isNewestAndRead
-                          ? "mix-card"
-                          : ""
+                      ${isNewestAndRead
+                        ? "mix-card"
+                        : ""
                       }
 
-                      ${
-                        isNewest &&
+                      ${isNewest &&
                         !isNewestAndRead
-                          ? "latest"
-                          : ""
+                        ? "latest"
+                        : ""
                       }
 
-                      ${
-                        isLastRead &&
+                      ${isLastRead &&
                         !isNewestAndRead
-                          ? "read-card"
-                          : ""
+                        ? "read-card"
+                        : ""
                       }
 
-                      ${
-                        isOld
-                          ? "old-card"
-                          : ""
+                      ${isOld
+                        ? "old-card"
+                        : ""
                       }
 
-                      ${
-                        selectedItems.includes(
-                          item.date
-                        )
-                          ? "selected-card"
-                          : ""
+                      ${selectedItems.includes(
+                        item.date
+                      )
+                        ? "selected-card"
+                        : ""
                       }
                     `}
                     key={index}
@@ -420,7 +447,7 @@ function History() {
                         onClick={(e) =>
                           deleteOne(
                             e,
-                            item.date
+                            item.id
                           )
                         }
                       >
@@ -446,7 +473,7 @@ function History() {
                     {/* ===== IMAGE ===== */}
 
                     <img
-                      src={item.image}
+                      src={`http://localhost:5000/uploads/${item.image}`}
                       alt="history"
                     />
 
@@ -455,7 +482,7 @@ function History() {
                     <div className="history-bottom">
 
                       <span className="kategori">
-                        {item.hasil}
+                        {item.category}
                       </span>
 
                       <small>

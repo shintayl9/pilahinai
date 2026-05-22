@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const predictRoutes = require("./src/routes/predictRoutes");
 const { router: historyRoutes } = require("./src/routes/historyRoutes");
@@ -11,6 +12,12 @@ const PORT = 5000;
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use(
+    "/uploads",
+    express.static(
+        path.join(__dirname, "uploads")
+    )
+);
 
 // routes
 app.use("/history", historyRoutes);

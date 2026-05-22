@@ -40,7 +40,11 @@ router.post(
          id: histories.length + 1,
          image: req.file.filename,
          category: "Organik",
-         confidence: "95%"
+         confidence: "95%",
+         date:
+            new Date().toLocaleString(
+               "id-ID"
+            )
       };
 
       // simpan history

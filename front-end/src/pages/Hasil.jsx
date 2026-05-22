@@ -3,6 +3,8 @@ import React, {
   useEffect,
 } from "react";
 
+import axios from "axios";
+
 import "../styles/Hasil.css";
 
 // ROUTER
@@ -137,46 +139,39 @@ function Hasil() {
   }, []);
 
   // ===== SUBMIT FEEDBACK =====
-  const handleSubmitFeedback = () => {
+  const handleSubmitFeedback = async () => {
 
     if (!feedback) {
       alert("Pilih feedback terlebih dahulu");
       return;
     }
 
-    const oldFeedback =
-      JSON.parse(
-        localStorage.getItem("feedbacks")
-      ) || [];
+    try {
 
-    const newFeedback = {
-      image: imageDariAI,
-      hasil: hasilDariAI,
-      rating: feedback,
-      text: feedbackText,
-      date: new Date().toLocaleString(),
-    };
+      await axios.post(
+        "http://localhost:5000/feedback",
+        {
+          feedback: feedbackText,
+          rating: feedback,
+        }
+      );
 
-    const updatedFeedback = [
-      ...oldFeedback,
-      newFeedback,
-    ];
+      setShowNotif(true);
 
-    localStorage.setItem(
-      "feedbacks",
-      JSON.stringify(updatedFeedback)
-    );
+      setIsSubmitted(true);
 
-    // SUCCESS
-    setShowNotif(true);
+      setTimeout(() => {
+        setShowNotif(false);
+      }, 2500);
 
-    // DISABLE BUTTON
-    setIsSubmitted(true);
+    } catch (error) {
 
-    // HIDE NOTIF
-    setTimeout(() => {
-      setShowNotif(false);
-    }, 2500);
+      console.error(
+        "Gagal kirim feedback:",
+        error
+      );
+
+    }
 
   };
 
@@ -359,11 +354,10 @@ function Hasil() {
 
           {/* LIKE */}
           <div
-            className={`feedback-item ${
-              feedback === "like"
-                ? "active"
-                : ""
-            }`}
+            className={`feedback-item ${feedback === "like"
+              ? "active"
+              : ""
+              }`}
             onClick={() =>
               !isSubmitted &&
               setFeedback("like")
@@ -381,11 +375,10 @@ function Hasil() {
 
           {/* DISLIKE */}
           <div
-            className={`feedback-item ${
-              feedback === "dislike"
-                ? "active"
-                : ""
-            }`}
+            className={`feedback-item ${feedback === "dislike"
+              ? "active"
+              : ""
+              }`}
             onClick={() =>
               !isSubmitted &&
               setFeedback("dislike")
@@ -429,7 +422,7 @@ function Hasil() {
       {/* NOTIFICATION */}
       {showNotif && (
         <div className="feedback-notif">
-          Feedback berhasil dikirim 
+          Feedback berhasil dikirim
         </div>
       )}
 
