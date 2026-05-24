@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const pool = require("./src/config/db");
 
 const predictRoutes = require("./src/routes/predictRoutes");
 const { router: historyRoutes } = require("./src/routes/historyRoutes");
@@ -28,6 +29,14 @@ app.use("/feedback", feedbackRoutes);
 app.get("/", (req, res) => {
     res.send("Back-End EcoSortAI berjalan");
 });
+
+pool.connect()
+    .then(() => {
+        console.log("PostgreSQL connected");
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 // jalankan server
 app.listen(PORT, () => {
