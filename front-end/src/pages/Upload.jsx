@@ -45,7 +45,8 @@ function Upload() {
 
       navigate("/loading", {
         state: {
-          image: image.preview,
+          image:
+            response.data.result.image,
           result:
             response.data.result,
         },
@@ -183,8 +184,8 @@ function Upload() {
 
         <div
           className={`upload-box ${isDragging
-              ? "dragging"
-              : ""
+            ? "dragging"
+            : ""
             }`}
           onDragEnter={onDragEnter}
           onDragLeave={onDragLeave}

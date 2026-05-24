@@ -22,12 +22,17 @@ function Hasil() {
   const navigate = useNavigate();
 
   // DATA DARI HALAMAN SEBELUMNYA
-  const hasilDariAI =
-    location.state?.hasil || "organik";
+  const [hasilDariAI, setHasilDariAI] =
+    useState(
+      location.state?.result
+        ?.category?.toLowerCase() ||
+      "organik"
+    );
 
   const imageDariAI =
-    location.state?.image ||
-    "https://via.placeholder.com/250";
+    location.state?.image
+      ? `http://localhost:5000/uploads/${location.state.image}`
+      : "https://via.placeholder.com/250";
 
   const [feedback, setFeedback] =
     useState(null);
@@ -39,6 +44,9 @@ function Hasil() {
     useState(false);
 
   const [showNotif, setShowNotif] =
+    useState(false);
+
+  const [isRefreshing, setIsRefreshing] =
     useState(false);
 
   // DATA HASIL
@@ -81,42 +89,6 @@ function Hasil() {
   };
 
   const data = hasilData[hasilDariAI];
-
-  // ===== AUTO SAVE HISTORY =====
-  useEffect(() => {
-
-    const oldHistory =
-      JSON.parse(
-        localStorage.getItem("history")
-      ) || [];
-
-    const newData = {
-      image: imageDariAI,
-      hasil: data?.kategori,
-      date: new Date().toLocaleString(),
-    };
-
-    // BIAR TIDAK DOBEL TERUS
-    const isExist = oldHistory.some(
-      (item) =>
-        item.image === newData.image
-    );
-
-    if (!isExist) {
-
-      const updatedHistory = [
-        newData,
-        ...oldHistory,
-      ];
-
-      localStorage.setItem(
-        "history",
-        JSON.stringify(updatedHistory)
-      );
-
-    }
-
-  }, []);
 
   // ===== CHECK FEEDBACK =====
   useEffect(() => {
@@ -173,6 +145,48 @@ function Hasil() {
 
     }
 
+  };
+
+  const handleRefreshResult = async () => {
+    try {
+      setIsRefreshing(true);
+
+      const historyId =
+        location.state?.result?.id;
+
+      setIsRefreshing(true);
+
+      const response =
+        await axios.put(
+          `http://localhost:5000/predict/${historyId}`
+        );
+
+        setHasilDariAI(
+  response.data.result.category.toLowerCase()
+);
+
+      navigate("/hasil", {
+        replace: true,
+        state: {
+          image:
+            response.data.result.image,
+          result:
+            response.data.result,
+        },
+      });
+
+      setIsRefreshing(false);
+
+    } catch (error) {
+
+      console.error(
+        "Gagal refresh hasil:",
+        error
+      );
+
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   return (
@@ -235,12 +249,22 @@ function Hasil() {
         {/* REFRESH */}
         <button
           className="retry-btn secondary"
-          onClick={() =>
-            window.location.reload()
-          }
+          onClick={handleRefreshResult}
+          disabled={isRefreshing}
         >
-          <RotateCcw size={18} />
-          Refresh Hasil
+
+          <RotateCcw
+            size={18}
+            className={
+              isRefreshing
+                ? "spin-icon"
+                : ""
+            }
+          />
+
+          {isRefreshing
+            ? "Mendeteksi..."
+            : "Deteksi Ulang"}
         </button>
 
         {/* HISTORY */}

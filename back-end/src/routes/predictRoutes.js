@@ -38,6 +38,9 @@ router.post(
       // data history baru
       const newHistory = {
          id: histories.length + 1,
+         sessionId:
+            req.body.sessionId ||
+            Date.now().toString(),
          image: req.file.filename,
          category: "Organik",
          confidence: "95%",
@@ -58,5 +61,56 @@ router.post(
 
    }
 );
+
+// PUT /predict/:id
+router.put("/:id", async (req, res) => {
+
+   const { id } = req.params;
+
+   // cari history berdasarkan id
+   const history = histories.find(
+      (item) => item.id == id
+   );
+
+   // kalau tidak ditemukan
+   if (!history) {
+      return res.status(404).json({
+         success: false,
+         message: "History tidak ditemukan"
+      });
+   }
+
+   // simulasi hasil AI random
+   const randomCategory =
+      Math.random() > 0.5
+         ? "Organik"
+         : "Anorganik";
+
+   const randomConfidence =
+      Math.floor(
+         Math.random() * 10
+      ) + 90 + "%";
+
+   // update history
+   history.category =
+      randomCategory;
+
+   history.confidence =
+      randomConfidence;
+
+   history.date =
+      new Date().toLocaleString("id-ID");
+
+   await new Promise((resolve) =>
+      setTimeout(resolve, 5000)
+   );
+
+   res.json({
+      success: true,
+      message: "Hasil berhasil diperbarui",
+      result: history
+   });
+
+});
 
 module.exports = router;

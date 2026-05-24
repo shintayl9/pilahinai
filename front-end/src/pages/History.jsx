@@ -54,9 +54,12 @@ function History() {
             "http://localhost:5000/history"
           );
 
-        setHistoryData(
-          response.data.data
-        );
+        const sortedData =
+          response.data.data.sort(
+            (a, b) => b.id - a.id
+          );
+
+        setHistoryData(sortedData);
 
       } catch (error) {
 
@@ -355,9 +358,15 @@ function History() {
                     ? item.date.split(",")
                     : ["Tanggal", "Tidak ada"];
 
+                const latestId =
+                  Math.max(
+                    ...historyData.map(
+                      (item) => item.id
+                    )
+                  );
+
                 const isNewest =
-                  historyData[0]?.date ===
-                  item.date;
+                  item.id === latestId;
 
                 const isLastRead =
                   lastRead === item.date;

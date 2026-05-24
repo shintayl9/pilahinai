@@ -5,11 +5,13 @@ const router = express.Router();
 // POST /feedback
 router.post("/", (req, res) => {
 
-   const { message } = req.body;
+   const { feedback, rating } =
+      req.body;
 
    res.json({
       success: true,
-      feedback: message
+      feedback,
+      rating
    });
 
 });
