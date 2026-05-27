@@ -31,11 +31,12 @@ function Loading() {
 
       navigate("/hasil", {
         state: {
-          image: location.state?.image,
-          result: location.state?.result,
+          imagePreview:
+            location.state?.imagePreview,
+          result:
+            location.state?.result,
         },
       });
-
     }
   };
 
@@ -55,9 +56,8 @@ function Loading() {
 
           <img
             src={
-              location.state?.image
-                ? `http://localhost:5000/uploads/${location.state.image}`
-                : "https://via.placeholder.com/250"
+              location.state?.imagePreview ||
+              "https://via.placeholder.com/250"
             }
             alt="preview"
             className="loading-image"

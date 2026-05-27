@@ -20,6 +20,7 @@ function Hasil() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const resultData = location.state?.result;
 
   // DATA DARI HALAMAN SEBELUMNYA
   const [hasilDariAI, setHasilDariAI] =
@@ -29,10 +30,19 @@ function Hasil() {
       "organik"
     );
 
+  useEffect(() => {
+    if (
+      location.state?.result?.category
+    ) {
+      setHasilDariAI(
+        location.state.result.category.toLowerCase()
+      );
+    }
+  }, [location.state]);
+
   const imageDariAI =
-    location.state?.image
-      ? `http://localhost:5000/uploads/${location.state.image}`
-      : "https://via.placeholder.com/250";
+    location.state?.imagePreview ||
+    "https://via.placeholder.com/250";
 
   const [feedback, setFeedback] =
     useState(null);
@@ -54,7 +64,6 @@ function Hasil() {
 
     organik: {
       kategori: "Organik",
-      akurasi: "96%",
 
       result:
         "Foto yang kamu kirim termasuk sampah Organik.",
@@ -71,7 +80,6 @@ function Hasil() {
 
     anorganik: {
       kategori: "Anorganik",
-      akurasi: "92%",
 
       result:
         "Foto yang kamu kirim termasuk sampah Anorganik.",
@@ -125,6 +133,7 @@ function Hasil() {
         {
           feedback: feedbackText,
           rating: feedback,
+          historyId: resultData?.id
         }
       );
 
@@ -148,11 +157,14 @@ function Hasil() {
   };
 
   const handleRefreshResult = async () => {
+    console.log(location.state);
     try {
       setIsRefreshing(true);
 
       const historyId =
-        location.state?.result?.id;
+        resultData?.id;
+
+      console.log("ID HISTORY:", historyId);
 
       setIsRefreshing(true);
 
@@ -161,19 +173,9 @@ function Hasil() {
           `http://localhost:5000/predict/${historyId}`
         );
 
-        setHasilDariAI(
-  response.data.result.category.toLowerCase()
-);
-
-      navigate("/hasil", {
-        replace: true,
-        state: {
-          image:
-            response.data.result.image,
-          result:
-            response.data.result,
-        },
-      });
+      setHasilDariAI(
+        response.data.result.category.toLowerCase()
+      );
 
       setIsRefreshing(false);
 
@@ -230,7 +232,7 @@ function Hasil() {
         </span>
 
         <span className="badge akurasi">
-          Accuracy {data?.akurasi}
+          Accuracy {resultData?.confidence}
         </span>
 
       </div>

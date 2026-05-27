@@ -45,11 +45,9 @@ function Upload() {
 
       navigate("/loading", {
         state: {
-          image:
-            response.data.result.image,
-          result:
-            response.data.result,
-        },
+          imagePreview: image.preview,
+          result: response.data.result
+        }
       });
 
     } catch (error) {

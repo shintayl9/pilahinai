@@ -1,4 +1,5 @@
 const express = require("express");
+const pool = require("../config/db");
 
 const router = express.Router();
 
@@ -6,32 +7,42 @@ const router = express.Router();
 const histories = [];
 
 // GET /history
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+
+   const result = await pool.query(
+      `
+   SELECT * FROM histories
+   ORDER BY created_at DESC
+   `
+   );
 
    res.json({
       success: true,
-      data: histories
+      data: result.rows
    });
 
 });
 
 // DELETE /history/:id
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
 
    const { id } = req.params;
 
-   const index = histories.findIndex(
-      (item) => item.id == id
+   const result = await pool.query(
+      `
+   DELETE FROM histories
+   WHERE id = $1
+   RETURNING *
+   `,
+      [id]
    );
 
-   if (index === -1) {
+   if (result.rowCount === 0) {
       return res.status(404).json({
          success: false,
          message: "History tidak ditemukan"
       });
    }
-
-   histories.splice(index, 1);
 
    res.json({
       success: true,

@@ -37,7 +37,6 @@ function History() {
     useState([]);
 
   // ===== MODAL =====
-
   const [showDeleteModal, setShowDeleteModal] =
     useState(false);
 
@@ -82,7 +81,6 @@ function History() {
   }, []);
 
   // ===== PAGINATION =====
-
   const itemsPerPage = 4;
 
   const startIndex =
@@ -95,12 +93,11 @@ function History() {
     );
 
   // ===== OPEN HISTORY =====
-
   const handleOpenHistory = (item) => {
 
     if (selectMode) {
 
-      toggleSelect(item.date);
+      toggleSelect(item.id);
 
       return;
 
@@ -108,74 +105,80 @@ function History() {
 
     localStorage.setItem(
       "lastRead",
-      item.date
+      item.created_at
     );
 
-    setLastRead(item.date);
+    setLastRead(item.created_at);
 
     navigate("/hasil", {
       state: {
         hasil:
           item.category.toLowerCase(),
-        image:
-          item.image,
+        imagePreview:
+          item.image_preview,
+        result: item
       },
     });
 
   };
 
   // ===== TOGGLE SELECT =====
-
-  const toggleSelect = (date) => {
-
+  const toggleSelect = (id) => {
     if (
-      selectedItems.includes(date)
+      selectedItems.includes(id)
     ) {
-
       setSelectedItems(
         selectedItems.filter(
-          (item) => item !== date
+          (item) => item !== id
+        )
+      );
+    } else {
+      setSelectedItems([
+        ...selectedItems,
+        id,
+      ]);
+    }
+  };
+
+  // ===== DELETE SELECTED =====
+  const deleteSelected = async () => {
+
+    try {
+
+      await Promise.all(
+        selectedItems.map((id) =>
+          axios.delete(
+            `http://localhost:5000/history/${id}`
+          )
         )
       );
 
-    } else {
+      const updatedHistory =
+        historyData.filter(
+          (item) =>
+            !selectedItems.includes(
+              item.id
+            )
+        );
 
-      setSelectedItems([
-        ...selectedItems,
-        date,
-      ]);
+      setHistoryData(updatedHistory);
+
+      setSelectedItems([]);
+
+      setSelectMode(false);
+
+    } catch (error) {
+
+      console.error(
+        "Gagal menghapus history terpilih:",
+        error
+      );
 
     }
 
   };
 
-  // ===== DELETE SELECTED =====
-
-  const deleteSelected = () => {
-
-    const updatedHistory =
-      historyData.filter(
-        (item) =>
-          !selectedItems.includes(
-            item.date
-          )
-      );
-
-    setHistoryData(updatedHistory);
-
-    localStorage.setItem(
-      "history",
-      JSON.stringify(updatedHistory)
-    );
-
-    setSelectedItems([]);
-
-    setSelectMode(false);
-
-  };
-
   // ===== DELETE ONE =====
-
   const deleteOne = async (
     e,
     id
@@ -208,7 +211,6 @@ function History() {
   };
 
   // ===== DELETE ALL =====
-
   const clearAllHistory = () => {
 
     setShowDeleteModal(true);
@@ -216,14 +218,30 @@ function History() {
   };
 
   // ===== CONFIRM DELETE =====
+  const confirmDeleteAll = async () => {
 
-  const confirmDeleteAll = () => {
+    try {
 
-    localStorage.removeItem("history");
+      await Promise.all(
+        historyData.map((item) =>
+          axios.delete(
+            `http://localhost:5000/history/${item.id}`
+          )
+        )
+      );
 
-    setHistoryData([]);
+      setHistoryData([]);
 
-    setShowDeleteModal(false);
+      setShowDeleteModal(false);
+
+    } catch (error) {
+
+      console.error(
+        "Gagal menghapus semua history:",
+        error
+      );
+
+    }
 
   };
 
@@ -354,8 +372,10 @@ function History() {
               (item, index) => {
 
                 const splitDate =
-                  item.date
-                    ? item.date.split(",")
+                  item.created_at
+                    ? new Date(item.created_at)
+                      .toLocaleString("id-ID")
+                      .split(",")
                     : ["Tanggal", "Tidak ada"];
 
                 const latestId =
@@ -369,7 +389,7 @@ function History() {
                   item.id === latestId;
 
                 const isLastRead =
-                  lastRead === item.date;
+                  lastRead === item.created_at;
 
                 const isNewestAndRead =
                   isNewest &&
@@ -407,7 +427,7 @@ function History() {
                       }
 
                       ${selectedItems.includes(
-                        item.date
+                        item.id
                       )
                         ? "selected-card"
                         : ""
@@ -440,7 +460,7 @@ function History() {
                       <div className="checkbox">
 
                         {selectedItems.includes(
-                          item.date
+                          item.id
                         ) && "✓"}
 
                       </div>
@@ -482,7 +502,10 @@ function History() {
                     {/* ===== IMAGE ===== */}
 
                     <img
-                      src={`http://localhost:5000/uploads/${item.image}`}
+                      src={
+                        item.image_preview ||
+                        "https://via.placeholder.com/250"
+                      }
                       alt="history"
                     />
 
@@ -495,7 +518,7 @@ function History() {
                       </span>
 
                       <small>
-                        96% Accurate
+                        {item.confidence} Accurate
                       </small>
 
                     </div>

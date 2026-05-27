@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -8,7 +10,7 @@ const { router: historyRoutes } = require("./src/routes/historyRoutes");
 const feedbackRoutes = require("./src/routes/feedbackRoutes");
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // middleware
 app.use(cors());
@@ -35,7 +37,7 @@ pool.connect()
         console.log("PostgreSQL connected");
     })
     .catch((err) => {
-        console.log(err);
+        console.error("Database connection error:", err);
     });
 
 // jalankan server

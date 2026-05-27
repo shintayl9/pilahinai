@@ -1,9 +1,11 @@
+const fs = require("fs");
+const path = require("path");
+
 const express = require("express");
 const multer = require("multer");
+const pool = require("../config/db");
 
 const router = express.Router();
-
-const { histories } = require("./historyRoutes");
 
 // konfigurasi penyimpanan file
 const storage = multer.diskStorage({
@@ -25,39 +27,109 @@ const upload = multer({ storage });
 router.post(
    "/",
    upload.single("image"),
-   (req, res) => {
+   async (req, res) => {
 
-      // validasi file
-      if (!req.file) {
-         return res.status(400).json({
-            success: false,
-            message: "Image wajib diupload"
-         });
-      }
+      try {
 
-      // data history baru
-      const newHistory = {
-         id: histories.length + 1,
-         sessionId:
-            req.body.sessionId ||
-            Date.now().toString(),
-         image: req.file.filename,
-         category: "Organik",
-         confidence: "95%",
-         date:
-            new Date().toLocaleString(
-               "id-ID"
+         // validasi file
+         if (!req.file) {
+            return res.status(400).json({
+               success: false,
+               message: "Image wajib diupload"
+            });
+         }
+
+         // convert image ke base64
+         const imageBuffer =
+            fs.readFileSync(req.file.path);
+
+         const imageBase64 =
+            `data:${req.file.mimetype};base64,${imageBuffer.toString("base64")}`;
+
+         // data history baru
+         const newHistory = {
+            sessionId:
+               req.body.sessionId ||
+               Date.now().toString(),
+
+            image: req.file.filename,
+
+            imagePreview: imageBase64,
+
+            category: "Organik",
+
+            confidence: "95%"
+         };
+
+         // letak integrasi AI di sini
+
+         // simpan history
+         const result = await pool.query(
+            `
+            INSERT INTO histories
+            (
+               session_id,
+               image,
+               image_preview,
+               category,
+               confidence,
+               created_at
             )
-      };
+            VALUES ($1, $2, $3, $4, $5, NOW())
+            RETURNING *
+            `,
+            [
+               newHistory.sessionId,
+               newHistory.image,
+               newHistory.imagePreview,
+               newHistory.category,
+               newHistory.confidence
+            ]
+         );
 
-      // simpan history
-      histories.push(newHistory);
+         // hapus file uploads
+         const imagePath = path.join(
+            __dirname,
+            "../../uploads",
+            req.file.filename
+         );
 
-      res.json({
-         success: true,
-         message: "Prediksi sampah berhasil",
-         result: newHistory
-      });
+         fs.unlink(imagePath, (err) => {
+
+            if (err) {
+
+               console.log(
+                  "Gagal hapus file:",
+                  err
+               );
+
+            } else {
+
+               console.log(
+                  "File upload berhasil dihapus"
+               );
+
+            }
+
+         });
+
+         // response
+         res.json({
+            success: true,
+            message: "Prediksi sampah berhasil",
+            result: result.rows[0]
+         });
+
+      } catch (error) {
+
+         console.error(error);
+
+         res.status(500).json({
+            success: false,
+            message: "Server error"
+         });
+
+      }
 
    }
 );
@@ -65,51 +137,79 @@ router.post(
 // PUT /predict/:id
 router.put("/:id", async (req, res) => {
 
-   const { id } = req.params;
+   try {
 
-   // cari history berdasarkan id
-   const history = histories.find(
-      (item) => item.id == id
-   );
+      const { id } = req.params;
 
-   // kalau tidak ditemukan
-   if (!history) {
-      return res.status(404).json({
-         success: false,
-         message: "History tidak ditemukan"
+      // cek data history di database
+      const checkHistory = await pool.query(
+         `
+         SELECT * FROM histories
+         WHERE id = $1
+         `,
+         [id]
+      );
+
+      // kalau tidak ditemukan
+      if (checkHistory.rowCount === 0) {
+
+         return res.status(404).json({
+            success: false,
+            message: "History tidak ditemukan"
+         });
+
+      }
+
+      // simulasi hasil AI random
+      const randomCategory =
+         Math.random() > 0.5
+            ? "Organik"
+            : "Anorganik";
+
+      const randomConfidence =
+         Math.floor(
+            Math.random() * 10
+         ) + 90 + "%";
+
+      // delay loading
+      await new Promise((resolve) =>
+         setTimeout(resolve, 5000)
+      );
+
+      // update database
+      const updatedHistory = await pool.query(
+         `
+         UPDATE histories
+         SET
+            category = $1,
+            confidence = $2,
+            created_at = NOW()
+         WHERE id = $3
+         RETURNING *
+         `,
+         [
+            randomCategory,
+            randomConfidence,
+            id
+         ]
+      );
+
+      res.json({
+         success: true,
+         message: "Hasil berhasil diperbarui",
+         result: updatedHistory.rows[0]
       });
+
+   } catch (error) {
+
+      console.error(error);
+
+      res.status(500).json({
+         success: false,
+         message: "Server error"
+      });
+
    }
-
-   // simulasi hasil AI random
-   const randomCategory =
-      Math.random() > 0.5
-         ? "Organik"
-         : "Anorganik";
-
-   const randomConfidence =
-      Math.floor(
-         Math.random() * 10
-      ) + 90 + "%";
-
-   // update history
-   history.category =
-      randomCategory;
-
-   history.confidence =
-      randomConfidence;
-
-   history.date =
-      new Date().toLocaleString("id-ID");
-
-   await new Promise((resolve) =>
-      setTimeout(resolve, 5000)
-   );
-
-   res.json({
-      success: true,
-      message: "Hasil berhasil diperbarui",
-      result: history
-   });
 
 });
 
