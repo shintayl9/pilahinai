@@ -513,7 +513,9 @@ function History() {
 
                     <div className="history-bottom">
 
-                      <span className="kategori">
+                      <span
+                        className={`kategori ${item.category?.toLowerCase()}`}
+                      >
                         {item.category}
                       </span>
 

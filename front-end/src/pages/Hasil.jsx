@@ -68,14 +68,27 @@ function Hasil() {
       result:
         "Foto yang kamu kirim termasuk sampah Organik.",
 
-      desc:
-        "Sampah organik berasal dari bahan alami seperti sisa makanan, daun, buah, dan bahan yang mudah terurai secara alami.",
+      title:
+        "Sampah Organik",
 
-      dampak:
-        "Jika tidak dikelola dengan baik, sampah organik dapat menimbulkan bau tidak sedap, menghasilkan gas metana, dan mencemari lingkungan sekitar.",
+      description: `
+        Sampah organik berasal dari bahan alami seperti sisa makanan, daun, buah, dan bahan yang mudah terurai secara alami.
 
-      solusi:
-        "Pisahkan sampah organik dan olah menjadi kompos agar lebih bermanfaat bagi lingkungan.",
+        Jenis sampah ini umumnya berasal dari aktivitas rumah tangga maupun lingkungan sekitar dan dapat diolah kembali menjadi kompos yang bermanfaat bagi tanaman.
+      `,
+
+      image:
+        "/images/organik.jpg",
+
+      note:
+        "Catatan: Sampah organik dapat diolah menjadi kompos untuk membantu mengurangi limbah rumah tangga.",
+
+      points: [
+        "Mudah terurai secara alami",
+        "Berasal dari sisa makhluk hidup",
+        "Dapat diolah menjadi pupuk kompos",
+        "Lebih ramah lingkungan"
+      ]
     },
 
     anorganik: {
@@ -84,15 +97,28 @@ function Hasil() {
       result:
         "Foto yang kamu kirim termasuk sampah Anorganik.",
 
-      desc:
-        "Sampah anorganik sulit terurai seperti plastik, kaca, kaleng, dan logam.",
+      title:
+        "Sampah Anorganik",
 
-      dampak:
-        "Sampah anorganik dapat mencemari tanah dan laut jika tidak didaur ulang dengan baik.",
+      description: `
+        Sampah anorganik merupakan jenis sampah yang sulit terurai seperti plastik, kaca, logam, dan kaleng.
 
-      solusi:
-        "Pisahkan sampah anorganik dan lakukan daur ulang untuk mengurangi pencemaran lingkungan.",
-    },
+        Sampah jenis ini membutuhkan proses daur ulang khusus agar tidak mencemari lingkungan dan dapat dimanfaatkan kembali menjadi produk baru.
+      `,
+
+      image:
+        "/images/anorganik.jpg",
+
+      note:
+        "Catatan: Sampah anorganik sebaiknya dipilah untuk proses daur ulang agar tidak mencemari lingkungan.",
+
+      points: [
+        "Sulit terurai secara alami",
+        "Dapat mencemari tanah dan laut",
+        "Bisa didaur ulang",
+        "Perlu pemilahan khusus"
+      ]
+    }
 
   };
 
@@ -157,16 +183,17 @@ function Hasil() {
   };
 
   const handleRefreshResult = async () => {
+
     console.log(location.state);
+
     try {
+
       setIsRefreshing(true);
 
       const historyId =
         resultData?.id;
 
       console.log("ID HISTORY:", historyId);
-
-      setIsRefreshing(true);
 
       const response =
         await axios.put(
@@ -187,7 +214,9 @@ function Hasil() {
       );
 
     } finally {
+
       setIsRefreshing(false);
+
     }
   };
 
@@ -227,7 +256,9 @@ function Hasil() {
       {/* BADGE */}
       <div className="badge-group">
 
-        <span className="badge kategori">
+        <span
+          className={`badge kategori ${hasilDariAI}`}
+        >
           {data?.kategori}
         </span>
 
@@ -267,6 +298,7 @@ function Hasil() {
           {isRefreshing
             ? "Mendeteksi..."
             : "Deteksi Ulang"}
+
         </button>
 
         {/* HISTORY */}
@@ -291,76 +323,58 @@ function Hasil() {
 
         </div>
 
-        {/* SECTION 1 */}
-        <div className="info-box">
+        {/* MODERN RESULT CARD */}
+        <div className="modern-card">
 
-          <div className="section-box">
+          <h2 className="modern-title">
+            {data?.title}
+          </h2>
 
-            <div className="section-number">
-              1
-            </div>
+          <div className="modern-description">
 
-            <div className="section-content">
-
-              <h4>
-                Tentang Sampah
-              </h4>
-
-              <div className="line"></div>
-
-              <p>{data?.desc}</p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* SECTION 2 */}
-        <div className="info-box">
-
-          <div className="section-box">
-
-            <div className="section-number">
-              2
-            </div>
-
-            <div className="section-content">
-
-              <h4>
-                Dampak Lingkungan
-              </h4>
-
-              <div className="line"></div>
-
-              <p>{data?.dampak}</p>
-
-            </div>
+            {data?.description
+              ?.split("\n")
+              .filter(
+                (text) =>
+                  text.trim() !== ""
+              )
+              .map(
+                (paragraph, index) => (
+                  <p key={index}>
+                    {paragraph}
+                  </p>
+                )
+              )}
 
           </div>
 
-        </div>
+          <img
+            src={data?.image}
+            alt={data?.kategori}
+            className="modern-image"
+          />
 
-        {/* SECTION 3 */}
-        <div className="info-box">
+          <p className="modern-note">
+            {data?.note}
+          </p>
 
-          <div className="section-box">
+          <div className="point-wrapper">
 
-            <div className="section-number">
-              3
-            </div>
+            <h4>Poin Penting</h4>
 
-            <div className="section-content">
+            <ul className="modern-points">
 
-              <h4>
-                Solusi Pengolahan
-              </h4>
+              {data?.points.map(
+                (item, index) => (
 
-              <div className="line"></div>
+                  <li key={index}>
+                    {item}
+                  </li>
 
-              <p>{data?.solusi}</p>
+                )
+              )}
 
-            </div>
+            </ul>
 
           </div>
 

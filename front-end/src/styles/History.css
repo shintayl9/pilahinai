@@ -433,8 +433,6 @@
   font-size: 16px;
   font-weight: 700;
 
-  color: #2e7d32;
-
   text-transform: capitalize;
 
   display: flex;
@@ -448,6 +446,8 @@
   border-radius: 0 !important;
 }
 
+/* TITIK */
+
 .kategori::before {
   content: "";
 
@@ -456,9 +456,27 @@
 
   border-radius: 50%;
 
-  background: #4caf50;
-
   flex-shrink: 0;
+}
+
+/* ORGANIK */
+
+.kategori.organik {
+  color: #2e7d32;
+}
+
+.kategori.organik::before {
+  background: #2e7d32;
+}
+
+/* ANORGANIK */
+
+.kategori.anorganik {
+  color: #d48806;
+}
+
+.kategori.anorganik::before {
+  background: #d48806;
 }
 
 .kategori::after {
