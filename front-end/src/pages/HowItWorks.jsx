@@ -33,13 +33,8 @@ function HowItWorks() {
                     <div className="step-item step-left">
                         <div className="step-number">1</div>
                         <div className="step-content">
-                            <h2>Upoad Gambar</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nulla tincidunt semper urna sit amet ornare. Nam bibendum
-                                pharetra mattis. Aenean laoreet eleifend ante quis interdum.
-                                Vestibulum vulputate, ipsum ut convallis convallis, nunc arcu
-                                vehicula sem, sed cursus purus lorem tincidunt diam. In tincidunt
-                                varius mattis. Aenean placerat fringilla mauris in pulvinar.
+                            <h2>Upload Gambar</h2>
+                            <p>Upload gambar sampah yang ingin kamu klasifikasikan melalui halaman upload EcoSortAI. Sistem mendukung berbagai jenis gambar sampah seperti organik, anorganik, residu, maupun limbah B3. Setelah gambar dipilih, pengguna dapat langsung mengirim gambar untuk diproses oleh AI.
                             </p>
                         </div>
                     </div>
@@ -48,12 +43,7 @@ function HowItWorks() {
                     <div className="step-item step-right">
                         <div className="step-content">
                             <h2>AI Menganalisis</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nulla tincidunt semper urna sit amet ornare. Nam bibendum
-                                pharetra mattis. Aenean laoreet eleifend ante quis interdum.
-                                Vestibulum vulputate, ipsum ut convallis convallis, nunc arcu
-                                vehicula sem, sed cursus purus lorem tincidunt diam. In tincidunt
-                                varius mattis. Aenean placerat fringilla mauris in pulvinar.
+                            <p>EcoSortAI akan memproses gambar menggunakan teknologi Artificial Intelligence untuk mengenali jenis sampah berdasarkan bentuk, warna, dan karakteristik objek pada gambar. Proses analisis dilakukan secara otomatis dalam beberapa detik menggunakan model machine learning yang telah dilatih sebelumnya.
                             </p>
                         </div>
                         <div className="step-number">2</div>
@@ -64,12 +54,7 @@ function HowItWorks() {
                         <div className="step-number">3</div>
                         <div className="step-content">
                             <h2>Hasil Klasifikasi</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nulla tincidunt semper urna sit amet ornare. Nam bibendum
-                                pharetra mattis. Aenean laoreet eleifend ante quis interdum.
-                                Vestibulum vulputate, ipsum ut convallis convallis, nunc arcu
-                                vehicula sem, sed cursus purus lorem tincidunt diam. In tincidunt
-                                varius mattis. Aenean placerat fringilla mauris in pulvinar.
+                            <p>Setelah proses analisis selesai, sistem akan menampilkan hasil klasifikasi sampah beserta tingkat akurasi deteksi. Pengguna juga dapat melihat penjelasan kategori sampah, melakukan deteksi ulang, serta menyimpan riwayat hasil klasifikasi untuk dilihat kembali kapan saja.
                             </p>
                         </div>
                     </div>

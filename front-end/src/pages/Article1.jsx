@@ -61,7 +61,7 @@ function Article1() {
           {/* kembali ke homepage */}
           <div className="article1-back-section">
             <span className="article1-back-text">Klik tombol disamping ini untuk kembali ke homepage</span>
-            <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+            <Link to="/home" onClick={() => window.scrollTo(0, 0)}>
               <button className="article1-back-btn">Klik</button>
             </Link>
           </div>

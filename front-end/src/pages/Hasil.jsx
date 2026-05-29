@@ -17,25 +17,53 @@ import {
 import { RotateCcw } from "lucide-react";
 
 function Hasil() {
+  useEffect(() => {
+
+    window.scrollTo(0, 0);
+
+  }, []);
 
   const location = useLocation();
   const navigate = useNavigate();
   const resultData = location.state?.result;
 
+  const aiCategory =
+    location.state?.result?.category?.toLowerCase() || "organic";
+
+  const categoryMapping = {
+    organic: "Organik",
+
+    plastik: "Anorganik",
+    kaca: "Anorganik",
+    logam: "Anorganik",
+    kardus: "Anorganik",
+    kertas: "Anorganik",
+    recyclable: "Anorganik",
+
+    residu: "Residu",
+
+    hazard: "B3"
+  };
+
+  const frontendCategory =
+    categoryMapping[aiCategory] || "Anorganik";
+
   // DATA DARI HALAMAN SEBELUMNYA
   const [hasilDariAI, setHasilDariAI] =
-    useState(
-      location.state?.result
-        ?.category?.toLowerCase() ||
-      "organik"
-    );
+    useState(frontendCategory.toLowerCase());
 
   useEffect(() => {
     if (
       location.state?.result?.category
     ) {
+      const aiResult =
+        location.state.result.category.toLowerCase();
+
+      const mappedCategory =
+        categoryMapping[aiResult] || "Anorganik";
+
       setHasilDariAI(
-        location.state.result.category.toLowerCase()
+        mappedCategory.toLowerCase()
       );
     }
   }, [location.state]);
@@ -118,6 +146,64 @@ function Hasil() {
         "Bisa didaur ulang",
         "Perlu pemilahan khusus"
       ]
+    },
+
+    b3: {
+      kategori: "B3",
+
+      result:
+        "Foto yang kamu kirim termasuk sampah B3.",
+
+      title:
+        "Sampah B3",
+
+      description: `
+    Sampah B3 merupakan limbah bahan berbahaya dan beracun yang dapat membahayakan lingkungan maupun kesehatan manusia.
+
+    Jenis sampah ini memerlukan penanganan khusus dan tidak boleh dibuang sembarangan.
+  `,
+
+      image:
+        "/images/anorganik.jpg",
+
+      note:
+        "Catatan: Sampah B3 harus dipisahkan dan dibuang sesuai prosedur khusus.",
+
+      points: [
+        "Berbahaya bagi lingkungan",
+        "Memerlukan penanganan khusus",
+        "Tidak boleh dibuang sembarangan",
+        "Berpotensi beracun"
+      ]
+    },
+
+    residu: {
+      kategori: "Residu",
+
+      result:
+        "Foto yang kamu kirim termasuk sampah Residu.",
+
+      title:
+        "Sampah Residu",
+
+      description: `
+    Sampah residu adalah sampah yang sulit didaur ulang maupun diolah kembali.
+
+    Jenis sampah ini biasanya menjadi limbah akhir dan perlu pengelolaan khusus agar tidak mencemari lingkungan.
+  `,
+
+      image:
+        "/images/anorganik.jpg",
+
+      note:
+        "Catatan: Sampah residu sebaiknya dikurangi penggunaannya untuk menjaga lingkungan.",
+
+      points: [
+        "Sulit didaur ulang",
+        "Menjadi limbah akhir",
+        "Perlu pengelolaan khusus",
+        "Berpotensi mencemari lingkungan"
+      ]
     }
 
   };
@@ -195,16 +281,64 @@ function Hasil() {
 
       console.log("ID HISTORY:", historyId);
 
-      const response =
-        await axios.put(
-          `http://localhost:5000/predict/${historyId}`
-        );
+      const imageResponse =
+        await fetch(imageDariAI);
 
-      setHasilDariAI(
-        response.data.result.category.toLowerCase()
+      const blob =
+        await imageResponse.blob();
+
+      const formData =
+        new FormData();
+
+      formData.append(
+        "file",
+        blob,
+        "redetect.jpg"
       );
 
-      setIsRefreshing(false);
+      formData.append(
+        "session_id",
+        resultData?.session_id
+      );
+
+      const response =
+        await axios.post(
+          "http://localhost:5001/predict_image",
+          formData,
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data",
+            },
+          }
+        );
+
+      const aiResult =
+        response.data.category.toLowerCase();
+
+      const mappedCategory =
+        categoryMapping[aiResult] || "Anorganik";
+
+      setHasilDariAI(
+        mappedCategory.toLowerCase()
+      );
+
+      resultData.category =
+        response.data.category;
+
+      resultData.confidence =
+        `${response.data.confidence}%`;
+
+      await axios.put(
+        `http://localhost:5000/history/${historyId}`,
+        {
+          category:
+            response.data.category,
+
+          confidence:
+            `${response.data.confidence}%`
+        }
+      );
 
     } catch (error) {
 
@@ -259,11 +393,17 @@ function Hasil() {
         <span
           className={`badge kategori ${hasilDariAI}`}
         >
-          {data?.kategori}
+          Kategori: {frontendCategory}
+        </span>
+
+        <span
+          className={`badge jenis ${hasilDariAI}`}
+        >
+          Jenis: {resultData?.category}
         </span>
 
         <span className="badge akurasi">
-          Accuracy {resultData?.confidence}
+          Akurasi: {resultData?.confidence}
         </span>
 
       </div>

@@ -510,17 +510,18 @@ function History() {
                     />
 
                     {/* ===== BOTTOM ===== */}
-
                     <div className="history-bottom">
 
                       <span
-                        className={`kategori ${item.category?.toLowerCase()}`}
+                        className={`history-category ${item.category?.toLowerCase()}`}
                       >
-                        {item.category}
+                        <span className="dot"></span>
+
+                        Jenis: {item.category}
                       </span>
 
                       <small>
-                        {item.confidence} Accurate
+                        Akurasi: {item.confidence}
                       </small>
 
                     </div>

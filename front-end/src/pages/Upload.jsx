@@ -18,22 +18,31 @@ function Upload() {
     useNavigate();
 
   // ===== HANDLE SUBMIT =====
-
   const handleSubmit = async () => {
 
     try {
+
+      navigate("/loading");
 
       const formData =
         new FormData();
 
       formData.append(
-        "image",
+        "file",
         image.file
+      );
+
+      const sessionId =
+        Date.now().toString();
+
+      formData.append(
+        "session_id",
+        sessionId
       );
 
       const response =
         await axios.post(
-          "http://localhost:5000/predict",
+          "http://localhost:5001/predict_image",
           formData,
           {
             headers: {
@@ -43,10 +52,28 @@ function Upload() {
           }
         );
 
+      const historyResponse =
+        await axios.post(
+          "http://localhost:5000/history",
+          {
+            session_id: sessionId,
+            category:
+              response.data.category,
+            confidence:
+              `${response.data.confidence}%`,
+            image:
+              image.file.name,
+            image_preview:
+              image.preview,
+          }
+        );
+
       navigate("/loading", {
         state: {
-          imagePreview: image.preview,
-          result: response.data.result
+          imagePreview:
+            image.preview,
+          result:
+            historyResponse.data.data
         }
       });
 
@@ -62,25 +89,54 @@ function Upload() {
   };
 
   // ===== PROSES FILE GAMBAR =====
-
   const processImage = (file) => {
-
     if (!file) return;
 
-    const reader =
-      new FileReader();
+    const img =
+      new Image();
 
-    reader.onloadend = () => {
+    const canvas =
+      document.createElement("canvas");
+
+    const ctx =
+      canvas.getContext("2d");
+
+    img.onload = () => {
+
+      const MAX_WIDTH = 300;
+
+      const scaleSize =
+        MAX_WIDTH / img.width;
+
+      canvas.width =
+        MAX_WIDTH;
+
+      canvas.height =
+        img.height * scaleSize;
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      const compressedBase64 =
+        canvas.toDataURL(
+          "image/jpeg",
+          0.5
+        );
 
       setImage({
         file: file,
-        preview: reader.result,
+        preview:
+          compressedBase64,
       });
-
     };
 
-    reader.readAsDataURL(file);
-
+    img.src =
+      URL.createObjectURL(file);
   };
 
   // ===== HANDLE KLIK UPLOAD =====

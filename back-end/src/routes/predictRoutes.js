@@ -5,6 +5,9 @@ const express = require("express");
 const multer = require("multer");
 const pool = require("../config/db");
 
+const FormData = require("form-data");
+const axios = require("axios");
+
 const router = express.Router();
 
 // konfigurasi penyimpanan file
@@ -61,7 +64,37 @@ router.post(
             confidence: "95%"
          };
 
-         // letak integrasi AI di sini
+// ============= INTEGRASI AI DI SINI ================
+         // kirim gambar ke AI
+         const formData = new FormData();
+
+         formData.append(
+            "file",
+            fs.createReadStream(req.file.path)
+         );
+
+         formData.append(
+            "process_id",
+            newHistory.sessionId
+         );
+
+         const aiResponse = await axios.post(
+            "http://127.0.0.1:5001/predict_image",
+            formData,
+            {
+               headers: formData.getHeaders()
+            }
+         );
+
+         // hasil AI
+         newHistory.category =
+            aiResponse.data.category;
+
+         newHistory.confidence =
+            (
+               aiResponse.data.confidence * 100
+            ).toFixed(2) + "%";
+// ===============================================
 
          // simpan history
          const result = await pool.query(

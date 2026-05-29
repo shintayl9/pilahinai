@@ -23,6 +23,46 @@ router.get("/", async (req, res) => {
 
 });
 
+// POST /history
+router.post("/", async (req, res) => {
+
+   const {
+      session_id,
+      category,
+      confidence,
+      image,
+      image_preview
+   } = req.body;
+
+   const result = await pool.query(
+      `
+      INSERT INTO histories
+      (
+         session_id,
+         category,
+         confidence,
+         image,
+         image_preview
+      )
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *
+      `,
+      [
+         session_id,
+         category,
+         confidence,
+         image,
+         image_preview
+      ]
+   );
+
+   res.status(201).json({
+      success: true,
+      data: result.rows[0]
+   });
+
+});
+
 // DELETE /history/:id
 router.delete("/:id", async (req, res) => {
 
@@ -49,6 +89,40 @@ router.delete("/:id", async (req, res) => {
       message: `History ${id} berhasil dihapus`
    });
 
+});
+
+// PUT /history/:id
+router.put("/:id", async (req, res) => {
+
+   const { id } =
+      req.params;
+
+   const {
+      category,
+      confidence
+   } = req.body;
+
+   const result =
+      await pool.query(
+         `
+         UPDATE histories
+         SET
+            category = $1,
+            confidence = $2
+         WHERE id = $3
+         RETURNING *
+         `,
+         [
+            category,
+            confidence,
+            id
+         ]
+      );
+
+   res.json({
+      success: true,
+      data: result.rows[0]
+   });
 });
 
 module.exports = {

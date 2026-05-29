@@ -4,11 +4,9 @@
 
 .hasil-container {
   min-height: 100vh;
-  background: linear-gradient(
-    to bottom,
-    #eef8ee,
-    #ffffff
-  );
+  background: linear-gradient(to bottom,
+      #eef8ee,
+      #ffffff);
 
   padding: 40px 20px 70px;
   text-align: center;
@@ -64,7 +62,6 @@
 }
 
 /* ===== BADGE ===== */
-
 .badge-group {
   display: flex;
   justify-content: center;
@@ -80,6 +77,7 @@
   font-weight: 600;
 }
 
+/* KATEGORI */
 .kategori {
   font-weight: 700;
 
@@ -89,22 +87,45 @@
 }
 
 /* ORGANIK */
-
 .kategori.organik {
   background: #dff3df;
   color: #2e7d32;
 }
 
-/* ANORGANIK */
+.kategori.organik::before {
+  background: #2e7d32;
+}
 
+/* ANORGANIK */
 .kategori.anorganik {
   background: #fff4d6;
   color: #d48806;
 }
 
-.akurasi {
-  background: #edf1ff;
-  color: #4a67d6;
+.kategori.anorganik::before {
+  background: #d48806;
+}
+
+/* RESIDU */
+
+.kategori.residu {
+  background: #eeeeee;
+  color: #616161;
+}
+
+.kategori.residu::before {
+  background: #757575;
+}
+
+/* B3 */
+
+.kategori.b3 {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.kategori.b3::before {
+  background: #c62828;
 }
 
 /* TITIK BADGE */
@@ -117,17 +138,35 @@
   display: inline-block;
 }
 
-.kategori.organik::before {
-  background: #2e7d32;
+/* JENIS */
+
+.jenis.organik {
+  background: #edf7ee;
+  color: #43a047;
 }
 
-.kategori.anorganik::before {
-  background: #d48806;
+.jenis.anorganik {
+  background: #eef4ff;
+  color: #3f51b5;
 }
 
+.jenis.residu {
+  background: #f1f1f1;
+  color: #757575;
+}
+
+.jenis.b3 {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+/* AKURASI */
+.akurasi {
+  background: #edf1ff;
+  color: #4a67d6;
+}
 
 /* ===== ACTION BUTTON ===== */
-
 .action-buttons {
   display: flex;
   justify-content: center;
@@ -366,11 +405,9 @@
 .feedback-box {
   max-width: 820px;
   margin: 50px auto 0;
-  background: linear-gradient(
-    135deg,
-    #7fb77e,
-    #5f915e
-  );
+  background: linear-gradient(135deg,
+      #7fb77e,
+      #5f915e);
   padding: 40px;
   border-radius: 28px;
   color: white;
