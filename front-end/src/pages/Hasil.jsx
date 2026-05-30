@@ -50,23 +50,16 @@ function Hasil() {
 
   // DATA DARI HALAMAN SEBELUMNYA
   const [hasilDariAI, setHasilDariAI] =
-    useState(frontendCategory.toLowerCase());
+    useState(aiCategory);
 
   useEffect(() => {
-    if (
-      location.state?.result?.category
-    ) {
-      const aiResult =
-        location.state.result.category.toLowerCase();
+  if (location.state?.result?.category) {
+    const aiResult =
+      location.state.result.category.toLowerCase();
 
-      const mappedCategory =
-        categoryMapping[aiResult] || "Anorganik";
-
-      setHasilDariAI(
-        mappedCategory.toLowerCase()
-      );
-    }
-  }, [location.state]);
+    setHasilDariAI(aiResult);
+  }
+}, [location.state]);
 
   const imageDariAI =
     location.state?.imagePreview ||
@@ -116,6 +109,241 @@ function Hasil() {
 
   // DATA HASIL
   const hasilData = {
+    plastik: {
+      kategori: "Plastik",
+
+      result:
+        "Foto yang kamu kirim termasuk kategori sampah Plastik.",
+
+      title:
+        "Jenis Sampah Plastik (Contoh: Botol Air Minum, Kantong Belanja, Wadah Makanan, Cup Plastik)",
+
+      description: `
+Sampah plastik adalah jenis limbah anorganik makromolekul sintetik yang membutuhkan waktu puluhan hingga ratusan tahun untuk terurai secara alami. Sifatnya yang ringan, tahan lama, dan kedap air membuatnya sangat sering digunakan, namun penanganan yang salah dapat menyebabkannya pecah menjadi mikroplastik yang merusak rantai makanan.
+`,
+
+      image:
+        "/plastik-1.png",
+
+      image2:
+        "/plastik-2.png",
+
+      handlingTitle:
+        "Berikut adalah tahapan penanganan sampah plastik yang benar dari rumah:",
+
+      handling: [
+        "Kosongkan dan Bilas: Pastikan tidak ada sisa makanan atau cairan di dalam botol atau wadah plastik. Sisa organik dapat menimbulkan bau dan mengkontaminasi material daur ulang lainnya.",
+
+        "Remas atau Pipihkan: Tekan atau injak botol plastik hingga kempis untuk mengurangi volume ruang penyimpanan di wadah penampungan rumah tangga maupun saat pengangkutan.",
+
+        "Lepaskan Label dan Tutup Botol: Pisahkan tutup botol, ring segel, dan label plastik jika jenis materialnya berbeda, karena proses peleburan pabrik sering memerlukan pemisahan jenis polimer seperti PET dan HDPE."
+      ],
+
+      publicGuideTitle:
+        "Jika tidak ditemukan tempat sampah khusus plastik apa yang dilakukan?",
+
+      publicGuide: [
+        "Bawa Pulang atau Simpan: Bersihkan sisa cairan di dalam botol atau cup, remas hingga pipih agar hemat tempat, lalu simpan di tas Anda untuk dibuang di rumah atau disalurkan ke Bank Sampah terdekat."
+      ],
+
+      benefitsTitle:
+        "Tujuan utama dari pengolahan sampah plastik yang baik adalah:",
+
+      benefits: [
+        "Mencegah Pembentukan Mikroplastik: Menghentikan plastik terfragmentasi di alam liar yang dapat mencemari air tanah, laut, serta masuk ke dalam organ tubuh makhluk hidup.",
+
+        "Mengurangi Penggunaan Minyak Bumi: Menghemat bahan baku fosil karena plastik daur ulang dapat digunakan kembali untuk membuat serat pakaian poliester, perabot, atau kemasan baru."
+      ]
+    },
+
+    kardus: {
+      kategori: "Kardus",
+
+      result:
+        "Foto yang kamu kirim termasuk kategori sampah Kardus.",
+
+      title:
+        "Jenis Sampah Kardus (Contoh: Kotak Paket/Ekspedisi, Kotak Sepatu, Dus Susu/Sereal)",
+
+      description: `
+Sampah kardus adalah kemasan kertas tebal bergelombang (corrugated cardboard) yang memiliki serat kayu kuat dan nilai daur ulang yang sangat tinggi. Kardus sangat mudah diproses kembali menjadi bubur kertas (pulp) untuk dijadikan kemasan baru, asalkan tidak terkontaminasi oleh minyak atau zat kimia.
+`,
+
+      image:
+        "/kardus-1.png",
+
+      image2:
+        "/kardus-2.png",
+
+      handlingTitle:
+        "Berikut adalah tahapan penanganan sampah kardus yang benar dari rumah:",
+
+      handling: [
+        "Lepaskan Selotip dan Lakban: Kelupas semua sisa selotip plastik, lakban, stiker resi pengiriman, atau staples besi yang menempel pada kardus karena material non-kertas ini dapat merusak mesin bubur kertas.",
+
+        "Bongkar dan Lipat Rata (Flatten): Buka semua lipatan kotak kardus hingga menjadi lembaran datar sempurna. Hal ini sangat krusial untuk menghemat ruang penyimpanan dan mempermudah pengikatan.",
+
+        "Jaga Tetap Kering: Simpan kardus di tempat yang terlindung dari air hujan dan kelembapan, karena kardus yang basah akan menurunkan kualitas serat selulosa secara drastis dan memicu pertumbuhan jamur."
+      ],
+
+      publicGuideTitle:
+        "Jika tidak ditemukan tempat sampah khusus kardus apa yang dilakukan?",
+
+      publicGuide: [
+        "Lipat Datar dan Amankan: Lipat kardus menjadi ukuran terkecil, ikat rapi, lalu bawa pulang atau titipkan ke tempat penampungan logistik atau kurir terdekat yang biasanya memiliki jalur pengelolaan limbah kardus mandiri."
+      ],
+
+      benefitsTitle:
+        "Tujuan utama dari pengolahan sampah kardus yang baik adalah:",
+
+      benefits: [
+        "Menghemat Ruang TPA secara Signifikan: Kardus berbentuk kotak utuh memakan ruang yang sangat besar di truk sampah dan TPA. Melipat dan mendaur ulangnya memaksimalkan efisiensi kapasitas lahan.",
+
+        "Menekan Laju Penebangan Pohon: Setiap ton kardus yang didaur ulang mampu menyelamatkan belasan pohon dewasa yang menjadi bahan baku utama pembuatan kertas baru."
+      ]
+    },
+
+    kertas: {
+      kategori: "Kertas",
+
+      result:
+        "Foto yang kamu kirim termasuk kategori sampah Kertas.",
+
+      title:
+        "Jenis Sampah Kertas (Contoh: Koran Bekas, Majalah, Dokumen HVS, Buku Tulis, Brosur)",
+
+      description: `
+Sampah kertas adalah sisa lembaran organik berbahan dasar serat kayu yang sangat ramah lingkungan untuk didaur ulang. Kertas merupakan salah satu komoditas daur ulang paling aktif, namun seratnya akan memendek setiap kali diproses ulang, sehingga memerlukan penanganan yang bersih agar kualitasnya tetap terjaga.
+`,
+
+      image:
+        "/kertas-1.png",
+
+      image2:
+        "/kertas-2.png",
+
+      handlingTitle:
+        "Berikut adalah tahapan penanganan sampah kertas yang benar dari rumah:",
+
+      handling: [
+        "Pisahkan Berdasarkan Jenisnya: Kelompokkan kertas putih (HVS/buku), kertas koran, dan kertas berwarna atau majalah mengkilap, karena tiap jenis memiliki nilai jual dan proses peleburan yang berbeda.",
+
+        "Singkirkan Komponen Non-Kertas: Lepaskan klip kertas (paperclip), staples, jilid spiral plastik, atau lapisan mika pelindung dokumen sebelum dikumpulkan.",
+
+        "Hindari Kontaminasi Minyak: Jangan mencampur kertas bersih dengan kertas yang terkena minyak seperti kertas bungkus makanan, gorengan, atau kotak pizza karena minyak tidak bisa dipisahkan dari serat kertas saat proses daur ulang."
+      ],
+
+      publicGuideTitle:
+        "Jika tidak ditemukan tempat sampah khusus kertas apa yang dilakukan?",
+
+      publicGuide: [
+        "Simpan di Tempat Kering: Masukkan kertas ke dalam kompartemen tas yang kering agar tidak basah oleh keringat atau air minum, lalu kumpulkan di rumah bersama persediaan kertas daur ulang lainnya."
+      ],
+
+      benefitsTitle:
+        "Tujuan utama dari pengolahan sampah kertas yang baik adalah:",
+
+      benefits: [
+        "Menghemat Energi dan Air: Proses pembuatan kertas dari bahan daur ulang membutuhkan air dan energi yang jauh lebih sedikit dibandingkan memproduksi kertas dari bahan baku pohon baru.",
+
+        "Mengurangi Emisi Gas Rumah Kaca: Kertas yang dibuang begitu saja di TPA akan membusuk secara anaerobik dan menghasilkan gas metana. Mendaur ulangnya membantu mengurangi emisi tersebut."
+      ]
+    },
+
+    kaca: {
+      kategori: "Kaca",
+
+      result:
+        "Foto yang kamu kirim termasuk kategori sampah Kaca.",
+
+      title:
+        "Jenis Sampah Kaca (Contoh: Botol Sirup, Toples Selai, Botol Parfum, Gelas Kaca)",
+
+      description: `
+Sampah kaca adalah limbah anorganik padat yang unik karena dapat didaur ulang secara terus-menerus (100% recyclable) tanpa mengalami penurunan kualitas atau kemurnian material. Kaca terbuat dari pasir silika yang dilebur pada suhu sangat tinggi, sehingga mengumpulkan dan melebur kembali kaca lama jauh lebih efisien secara energi.
+`,
+
+      image:
+        "/kaca-1.png",
+
+      image2:
+        "/kaca-2.png",
+
+      handlingTitle:
+        "Berikut adalah tahapan penanganan sampah kaca yang benar dari rumah:",
+
+      handling: [
+        "Kosongkan dan Bilas Total: Cuci bersih bagian dalam botol atau toples kaca dari sisa sirup, selai, atau minyak. Keringkan sebelum disimpan.",
+
+        "Pisahkan Tutup Botol: Lepaskan tutup botol yang biasanya terbuat dari logam (seng) atau plastik, karena material tersebut masuk ke lini daur ulang yang berbeda.",
+
+        "Amankan dari Risiko Pecah: Simpan dalam wadah kokoh seperti krat atau kotak kayu atau kardus tebal. Jika ada kaca yang sudah pecah, bungkus pecahan tersebut dengan koran tebal lalu beri label 'Pecahan Kaca' demi keselamatan petugas kebersihan."
+      ],
+
+      publicGuideTitle:
+        "Jika tidak ditemukan tempat sampah khusus kaca apa yang dilakukan?",
+
+      publicGuide: [
+        "Bawa Pulang dengan Hati-Hati: Bungkus botol atau kemasan kaca agar tidak saling berbenturan di dalam tas, lalu bawa pulang untuk dikumpulkan dan disalurkan ke Bank Sampah atau pengrajin lokal."
+      ],
+
+      benefitsTitle:
+        "Tujuan utama dari pengolahan sampah kaca yang baik adalah:",
+
+      benefits: [
+        "Efisiensi Energi Peleburan: Melebur kaca bekas (cullet) membutuhkan suhu yang jauh lebih rendah dibandingkan melebur bahan mentah pasir silika, sehingga menghemat konsumsi bahan bakar pabrik.",
+
+        "Mencegah Cedera dan Kecelakaan Kerja: Penanganan dan pemisahan kaca yang terstruktur melindungi pemulung dan petugas kebersihan dari luka robek akibat pecahan kaca yang tercampur dalam sampah biasa."
+      ]
+    },
+
+    logam: {
+      kategori: "Logam",
+
+      result:
+        "Foto yang kamu kirim termasuk kategori sampah Logam.",
+
+      title:
+        "Jenis Sampah Logam (Contoh: Kaleng Minuman Aluminium, Kaleng Susu Seng, Sendok Rusak, Panci Bekas)",
+
+      description: `
+Sampah logam, terutama aluminium dan besi/baja, adalah salah satu material daur ulang yang paling berharga secara ekonomi. Logam memiliki ketahanan struktur yang sangat tinggi dan dapat dilebur berulang kali menjadi produk baru tanpa kehilangan kekuatan mekanisnya.
+`,
+
+      image:
+        "/logam-1.png",
+
+      image2:
+        "/logam-2.png",
+
+      handlingTitle:
+        "Berikut adalah tahapan penanganan sampah logam yang benar dari rumah:",
+
+      handling: [
+        "Bersihkan Sisa Isi Kemasan: Bilas bagian dalam kaleng makanan atau minuman hingga bersih untuk mencegah lalat, semut, dan bau tidak sedap selama masa penyimpanan.",
+
+        "Pipihkan (Khusus Kaleng Aluminium): Tekan atau injak kaleng minuman hingga pipih untuk memaksimalkan kapasitas ruang penyimpanan.",
+
+        "Tekuk Tutup Kaleng ke Dalam: Untuk kaleng makanan yang dibuka dengan alat pembuka tajam, tekuk lidah tutup kaleng yang tajam ke arah dalam agar tidak melukai tangan saat proses pemilahan."
+      ],
+
+      publicGuideTitle:
+        "Jika tidak ditemukan tempat sampah khusus logam apa yang dilakukan?",
+
+      publicGuide: [
+        "Simpan dan Bawa Pulang: Karena ukurannya yang relatif ringkas, bilas kaleng tersebut, keringkan dengan tisu, lalu masukkan ke kantong barang untuk dibawa pulang menuju tempat pemilahan utama."
+      ],
+
+      benefitsTitle:
+        "Tujuan utama dari pengolahan sampah logam yang baik adalah:",
+
+      benefits: [
+        "Penghematan Sumber Daya Tambang: Mendaur ulang aluminium menghemat hingga 95% energi yang dibutuhkan untuk menambang dan memproses bijih bauksit mentah dari alam.",
+
+        "Menghilangkan Tempat Bersarangnya Nyamuk: Kaleng logam yang terbuang sembarangan di lahan terbuka dapat menampung air hujan dan menjadi sarang utama berkembang biaknya nyamuk penular demam berdarah (Aedes aegypti)."
+      ]
+    },
+
     organik: {
       kategori: "Organik",
 
@@ -202,31 +430,111 @@ Sampah Organik adalah material sisa yang berasal dari makhluk hidup (hewan dan t
       kategori: "B3",
 
       result:
-        "Foto yang kamu kirim termasuk kategori sampah B3.",
+        "Foto yang kamu kirim termasuk kategori sampah B3 (Bahan Berbahaya dan Beracun).",
 
       title:
-        "Sampah B3",
+        "Jenis Sampah B3 / Hazard (Contoh: Baterai Bekas, Lampu Neon, Botol Aerosol)",
 
       description: `
-    Sampah B3 merupakan limbah bahan berbahaya dan beracun yang dapat membahayakan lingkungan maupun kesehatan manusia.
+Sampah Hazard atau B3 (Bahan Berbahaya dan Beracun) adalah sisa limbah dari aktivitas manusia maupun industri yang mengandung zat, energi, atau komponen berbahaya yang dapat mencemari lingkungan, merusak ekosistem, serta membahayakan kesehatan manusia secara langsung maupun tidak langsung.
 
-    Jenis sampah ini memerlukan penanganan khusus dan tidak boleh dibuang sembarangan.
-  `,
+Limbah ini dicirikan oleh sifatnya yang mudah meledak, mudah terbakar, reaktif, beracun, menyebarkan infeksi, atau bersifat korosif sehingga memerlukan penanganan khusus.
+`,
 
       image:
-        "/images/anorganik.jpg",
+        "/B3-1.png",
 
-      note:
-        "Catatan: Sampah B3 harus dipisahkan dan dibuang sesuai prosedur khusus.",
+      image2:
+        "/B3-2.png",
 
-      points: [
-        "Berbahaya bagi lingkungan",
-        "Memerlukan penanganan khusus",
-        "Tidak boleh dibuang sembarangan",
-        "Berpotensi beracun"
+      handlingTitle:
+        "Berikut adalah tahapan penanganan sampah B3 yang aman dari rumah:",
+
+      handling: [
+        "Lakukan pemilahan dan pemisahan limbah seperti baterai bekas, lampu neon, atau botol aerosol ke dalam kotak kardus atau wadah plastik tebal yang kering dan jauh dari jangkauan anak-anak.",
+
+        "Kumpulkan terlebih dahulu hingga jumlah tertentu agar lebih aman dan efisien dalam proses pengangkutan.",
+
+        "Bawa ke fasilitas penjemputan sampah elektronik atau B3 terdekat, atau serahkan ke pos pengelolaan sampah lingkungan yang bekerja sama dengan Dinas Lingkungan Hidup."
+      ],
+
+      publicGuideTitle:
+        "Jika tidak menemukan tempat sampah khusus B3 apa yang dilakukan?",
+
+      publicGuide: [
+        "Simpan sementara di wadah tertutup yang aman dan jangan dicampur dengan sampah rumah tangga biasa.",
+
+        "Bawa pulang untuk disimpan hingga dapat disalurkan ke fasilitas pengelolaan limbah B3 resmi.",
+
+        "Hindari membuang baterai, lampu neon, atau aerosol ke tempat sampah umum karena berpotensi mencemari lingkungan dan membahayakan petugas kebersihan."
+      ],
+
+      benefitsTitle:
+        "Tujuan utama dari pengolahan sampah B3 yang baik adalah:",
+
+      benefits: [
+        "Menghindari kontaminasi logam berat berbahaya seperti merkuri, timbal, dan kadmium agar tidak meresap ke dalam tanah maupun sumber air masyarakat.",
+
+        "Mencegah Ledakan dan Kebakaran karena limbah seperti baterai litium, aerosol, atau bahan kimia tertentu sangat mudah bereaksi terhadap panas dan tekanan.",
+
+        "Melindungi petugas kebersihan, pemilah sampah, dan masyarakat dari risiko luka bakar kimia, iritasi pernapasan, keracunan, maupun cedera akibat pecahan material berbahaya."
       ]
     },
 
+    recyclable: {
+      kategori: "Recyclable",
+
+      result:
+        "Foto yang kamu kirim termasuk kategori sampah Recyclable.",
+
+      title:
+        "Jenis Sampah Recyclable (Contoh: Botol Plastik, Kaleng, Kaca)",
+
+      description: `
+Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun masih memiliki nilai ekonomi karena dapat diproses kembali menjadi bahan baku baru. Berbeda dengan residu yang tidak dapat didaur ulang atau B3 yang memerlukan penanganan khusus, sampah recyclable dapat dilebur, dicacah, atau dirakit ulang menjadi produk yang berguna apabila dikelola dengan benar.
+`,
+
+      image:
+        "/recyclable-1.png",
+
+      image2:
+        "/recyclable-2.png",
+
+      handlingTitle:
+        "Berikut adalah tahapan penanganan sampah daur ulang dari rumah hingga siap diolah:",
+
+      handling: [
+        "Jangan mencampur semua sampah daur ulang dalam satu wadah. Pisahkan menjadi empat kategori utama yaitu plastik, kertas, logam, dan kaca.",
+
+        "Bersihkan atau cuci bagian dalam botol, kaleng, atau toples kaca yang bekas makanan maupun minuman agar tidak mengundang serangga dan bau.",
+
+        "Keringkan sampah yang sudah dibilas hingga benar-benar kering untuk mencegah jamur dan kontaminasi material lainnya.",
+
+        "Setelah terkumpul dalam kondisi bersih dan kering, salurkan melalui Bank Sampah, layanan penjemputan sampah daur ulang, petugas kebersihan, atau pengepul."
+      ],
+
+      publicGuideTitle:
+        "Jika tidak ditemukan tempat sampah khusus daur ulang apa yang dilakukan?",
+
+      publicGuide: [
+        "Bawa Pulang atau Simpan: Bersihkan sisa cairan di dalam botol atau kaleng, remas hingga pipih agar hemat tempat, lalu simpan sementara di dalam tas.",
+
+        "Setor ke Bank Sampah: Kumpulkan di rumah hingga jumlahnya cukup banyak, kemudian jual atau serahkan ke Bank Sampah terdekat maupun pengepul lokal."
+      ],
+
+      benefitsTitle:
+        "Manfaat utama dari pengolahan sampah recyclable adalah:",
+
+      benefits: [
+        "Mengurangi volume sampah yang berakhir di Tempat Pembuangan Akhir (TPA).",
+
+        "Menghemat penggunaan sumber daya alam karena material lama dapat dimanfaatkan kembali menjadi produk baru.",
+
+        "Mengurangi kebutuhan energi dalam proses produksi dibandingkan menggunakan bahan baku mentah dari alam.",
+
+        "Meningkatkan nilai ekonomi melalui kegiatan daur ulang serta mendukung ekonomi sirkular yang berkelanjutan."
+      ]
+    },
     residu: {
       kategori: "Residu",
 
@@ -376,12 +684,7 @@ Sampah Organik adalah material sisa yang berasal dari makhluk hidup (hewan dan t
       const aiResult =
         response.data.category.toLowerCase();
 
-      const mappedCategory =
-        categoryMapping[aiResult] || "Anorganik";
-
-      setHasilDariAI(
-        mappedCategory.toLowerCase()
-      );
+      setHasilDariAI(aiResult);
 
       resultData.category =
         response.data.category;
