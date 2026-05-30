@@ -87,43 +87,93 @@ function Hasil() {
   const [isRefreshing, setIsRefreshing] =
     useState(false);
 
+  // DATA KATEGORI
+  const kategoriData = {
+    organik: {
+      title: "Kategori Organik",
+      description:
+        "Sampah organik merupakan sampah yang berasal dari makhluk hidup seperti sisa makanan, daun, ranting, dan bahan alami lainnya yang mudah terurai secara alami oleh mikroorganisme."
+    },
+
+    anorganik: {
+      title: "Kategori Anorganik",
+      description:
+        "Sampah anorganik merupakan sampah yang sulit terurai secara alami dan umumnya berasal dari bahan non-hayati seperti plastik, kaca, logam, kertas, dan kardus. Jenis sampah ini dapat dikelola melalui proses daur ulang."
+    },
+
+    residu: {
+      title: "Kategori Residu",
+      description:
+        "Sampah residu adalah sampah yang tidak dapat didaur ulang atau diolah kembali sehingga memerlukan penanganan khusus sebelum dibuang ke tempat pembuangan akhir."
+    },
+
+    b3: {
+      title: "Kategori B3",
+      description:
+        "Sampah B3 (Bahan Berbahaya dan Beracun) merupakan limbah yang dapat membahayakan kesehatan manusia maupun lingkungan sehingga memerlukan penanganan khusus."
+    }
+  };
+
   // DATA HASIL
   const hasilData = {
-
     organik: {
       kategori: "Organik",
 
       result:
-        "Foto yang kamu kirim termasuk sampah Organik.",
+        "Foto yang kamu kirim termasuk kategori sampah Organik.",
 
       title:
-        "Sampah Organik",
+        "Jenis Sampah Organik (Contoh: Sisa Makanan, Daun Kering, Teh Celup)",
 
       description: `
-        Sampah organik berasal dari bahan alami seperti sisa makanan, daun, buah, dan bahan yang mudah terurai secara alami.
-
-        Jenis sampah ini umumnya berasal dari aktivitas rumah tangga maupun lingkungan sekitar dan dapat diolah kembali menjadi kompos yang bermanfaat bagi tanaman.
-      `,
-
+Sampah Organik adalah material sisa yang berasal dari makhluk hidup (hewan dan tumbuhan) yang bersifat hayati dan mudah membusuk. Berbeda dengan residu, B3, atau recyclable, jenis sampah ini dapat diurai kembali oleh alam (biodegradabel) secara cepat melalui proses dekomposisi alami oleh mikroorganisme menjadi unsur hara tanah.
+`,
       image:
-        "/images/organik.jpg",
+        "/organik-1.png",
+      image2:
+        "/organik-2.png",
 
-      note:
-        "Catatan: Sampah organik dapat diolah menjadi kompos untuk membantu mengurangi limbah rumah tangga.",
+      handlingTitle:
+        "Berikut adalah tahapan penanganan sampah organik yang benar di lingkup rumah tangga:",
 
-      points: [
-        "Mudah terurai secara alami",
-        "Berasal dari sisa makhluk hidup",
-        "Dapat diolah menjadi pupuk kompos",
-        "Lebih ramah lingkungan"
-      ]
+      handling: [
+        "Bagi sampah organik menjadi dua jenis Organik hijau (Basah/Kaya Nitrogen) dan Organik coklat (Kering/Kaya Karbon) untuk mempermudah pengolahan.",
+
+        "Potong atau cacah sisa sayuran, kulit buah, atau daun kering menjadi ukuran sekitar 2–5 cm. Semakin kecil ukurannya, semakin cepat mikroorganisme mengurainya menjadi kompos.",
+
+        "Pilih salah satu metode pengolahan seperti membuat kompos dengan mencampurkan sampah organik hijau dan coklat, kemudian ditambahkan sedikit tanah atau cairan EM4 (Starter Bakteri), atau metode Lubang Biopori dengan membuat lubang silindris vertikal ke dalam tanah di halaman rumah, kemudian masukkan sampah organik secara berkala ke dalamnya untuk menyuburkan tanah dan meningkatkan daya resap air hujan."
+      ],
+
+      publicGuideTitle:
+        "Jika Anda berada di ruang publik dan tidak menemukan tempat sampah khusus organik, lakukan langkah berikut:",
+
+      publicGuide: [
+        "Bawa Pulang dalam Wadah Tertutup: Masukkan sisa makanan ke dalam kotak makan kosong atau kantong ramah lingkungan agar bau dan cairannya tidak bocor di dalam tas.",
+
+        "Kubur di Tanah (Jika Memungkinkan): Jika Anda sedang berkemah atau berada di alam terbuka, sampah organik non-olahan (seperti kulit buah) bisa dikubur langsung di dalam tanah untuk menjadi pupuk alami.",
+
+        "Kelola di Rumah: Setibanya di rumah, masukkan sampah organik ini ke dalam wadah komposter atau biopori keluarga."
+      ],
+
+      benefitsTitle:
+        "Memisahkan dan mengolah sampah organik dengan benar memiliki dampak paling krusial terhadap keberlanjutan lingkungan, yaitu:",
+
+      benefits: [
+        "Mencegah Ledakan Gas Metana di TPA: Sampah organik yang tertumpuk dan tertimbun bersama plastik di TPA akan membusuk tanpa oksigen, menghasilkan gas metana yang berpotensi memicu ledakan dan kebakaran TPA, serta menjadi gas rumah kaca yang 25 kali lebih merusak daripada CO2.",
+
+        "Menghilangkan Air Lindi (Cairan Sampah): Sampah organik adalah pemicu utama munculnya cairan hitam berbau busuk (air lindi) di truk sampah dan TPA yang dapat mencemari sumur air warga sekitar.",
+
+        "Menghasilkan Pupuk Alami (Kompos): Mengubah limbah menjadi pupuk organik kaya nutrisi yang dapat menyuburkan tanah, memperbaiki struktur lahan pertanian, dan mengurangi ketergantungan pada pupuk kimia.",
+
+        "Sumber Pakan Alternatif (Maggot BSF): Sampah organik kering/basah dapat diolah menjadi pakan larva Black Soldier Fly (Maggot BSF), yang nantinya menjadi pakan ternak tinggi protein dan bernilai ekonomi tinggi."
+      ],
     },
 
     anorganik: {
       kategori: "Anorganik",
 
       result:
-        "Foto yang kamu kirim termasuk sampah Anorganik.",
+        "Foto yang kamu kirim termasuk kategori sampah Anorganik.",
 
       title:
         "Sampah Anorganik",
@@ -152,7 +202,7 @@ function Hasil() {
       kategori: "B3",
 
       result:
-        "Foto yang kamu kirim termasuk sampah B3.",
+        "Foto yang kamu kirim termasuk kategori sampah B3.",
 
       title:
         "Sampah B3",
@@ -181,34 +231,44 @@ function Hasil() {
       kategori: "Residu",
 
       result:
-        "Foto yang kamu kirim termasuk sampah Residu.",
+        "Foto yang kamu kirim termasuk kategori sampah Residu.",
 
       title:
-        "Sampah Residu",
+        "Jenis Sampah Residu (Contoh: Masker, Pembalut, Popok)",
 
       description: `
-    Sampah residu adalah sampah yang sulit didaur ulang maupun diolah kembali.
-
-    Jenis sampah ini biasanya menjadi limbah akhir dan perlu pengelolaan khusus agar tidak mencemari lingkungan.
-  `,
+      Sampah yang tidak bisa didaur ulang karena kontaminasi biologis atau sifat materialnya yang kompleks sehingga tidak bisa didaur ulang, seperti tisu bekas, pembalut, popok sekali pakai, puntung rokok, dan styrofoam.
+      `,
 
       image:
-        "/images/anorganik.jpg",
+        "/residu-1.png",
 
-      note:
-        "Catatan: Sampah residu sebaiknya dikurangi penggunaannya untuk menjaga lingkungan.",
+      handlingTitle:
+        "Sampah residu harus ditangani dengan penanganan khusus meliputi:",
 
-      points: [
-        "Sulit didaur ulang",
-        "Menjadi limbah akhir",
-        "Perlu pengelolaan khusus",
-        "Berpotensi mencemari lingkungan"
-      ]
+      handling: [
+        "Wajib dibungkus rapat dalam plastik/wadah tertutup sebelum dibuang ke tempat sampah.",
+        "Khusus masker: Gunting tali dan bagian tengah masker untuk mencegah penyalahgunaan kembali oleh pihak tidak bertanggung jawab."
+      ],
+
+      facilityImage:
+        "/residu-2.png",
+
+      publicGuideTitle:
+        "Jika tidak ditemukan tempat sampah khusus residu apa yang dilakukan?",
+
+      publicGuide: [
+        "Bawa Kembali: Masukkan sampah ke dalam kantong plastik klip atau wadah tertutup di dalam tas Anda, lalu buang setibanya di rumah atau di tempat yang menyediakan fasilitas pilah sampah yang memadai."
+      ],
+
+      benefitsText:
+        "Tujuan utama dari pengolahan sampah residu yang baik adalah mengurangi volume sampah yang berakhir di TPA (Tempat Pembuangan Akhir) dan mencegah pencemaran lingkungan. Dan mencegah penyebaran penyakit serta menjaga kebersihan lingkungan dari limbah medis rumah tangga."
     }
-
   };
 
   const data = hasilData[hasilDariAI];
+  const kategoriInfo =
+    kategoriData[hasilDariAI];
 
   // ===== CHECK FEEDBACK =====
   useEffect(() => {
@@ -458,20 +518,19 @@ function Hasil() {
 
         {/* RESULT */}
         <div className="info-box">
-
           <h3>{data?.result}</h3>
-
+          <p>
+            {kategoriInfo?.description}
+          </p>
         </div>
 
         {/* MODERN RESULT CARD */}
         <div className="modern-card">
-
           <h2 className="modern-title">
             {data?.title}
           </h2>
 
           <div className="modern-description">
-
             {data?.description
               ?.split("\n")
               .filter(
@@ -485,7 +544,6 @@ function Hasil() {
                   </p>
                 )
               )}
-
           </div>
 
           <img
@@ -494,32 +552,81 @@ function Hasil() {
             className="modern-image"
           />
 
+          {data?.handling && (
+            <div className="point-wrapper">
+              <h4>{data?.handlingTitle}</h4>
+              <ul className="modern-points">
+                {data.handling.map(
+                  (item, index) => (
+                    <li key={index}>
+                      {item}
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          )}
+
+          {data?.facilityImage && (
+            <img
+              src={data.facilityImage}
+              alt="fasilitas"
+              className="modern-image"
+            />
+          )}
+
+          {data?.image2 && (
+            <img
+              src={data.image2}
+              alt="Fasilitas Organik"
+              className="modern-image"
+            />
+          )}
+
+          {data?.publicGuide && (
+
+            <div className="point-wrapper">
+              <h4>{data?.publicGuideTitle}</h4>
+              <ul className="modern-points">
+                {data.publicGuide.map(
+                  (item, index) => (
+                    <li key={index}>
+                      {item}
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          )}
+
+          {data?.benefitsText && (
+            <div className="modern-description">
+              <p>{data.benefitsText}</p>
+            </div>
+          )}
+
+          {data?.benefits && (
+
+            <div className="point-wrapper">
+              <h4>
+                {data?.benefitsTitle}
+              </h4>
+              <ul className="modern-points">
+                {data.benefits.map(
+                  (item, index) => (
+                    <li key={index}>
+                      {item}
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          )}
+
           <p className="modern-note">
             {data?.note}
           </p>
-
-          <div className="point-wrapper">
-
-            <h4>Poin Penting</h4>
-
-            <ul className="modern-points">
-
-              {data?.points.map(
-                (item, index) => (
-
-                  <li key={index}>
-                    {item}
-                  </li>
-
-                )
-              )}
-
-            </ul>
-
-          </div>
-
         </div>
-
       </div>
 
       {/* FEEDBACK */}

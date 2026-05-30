@@ -263,6 +263,12 @@
   font-size: 28px;
   color: #2f2f2f;
   line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.info-box p {
+  margin-top: 0;
+  line-height: 1.7;
 }
 
 /* ===== MODERN RESULT CARD ===== */
@@ -297,8 +303,8 @@
 
 .modern-image {
   width: 100%;
-  max-height: 320px;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   border-radius: 22px;
   margin-bottom: 18px;
   box-shadow:
@@ -331,7 +337,6 @@
 }
 
 /* ===== MODERN RESULT CARD ===== */
-
 .modern-card {
   background: white;
   padding: 35px;
@@ -367,8 +372,8 @@
 
 .modern-image {
   width: 100%;
-  max-height: 320px;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   border-radius: 22px;
   margin-bottom: 18px;
   box-shadow:
@@ -401,7 +406,6 @@
 }
 
 /* ===== FEEDBACK ===== */
-
 .feedback-box {
   max-width: 820px;
   margin: 50px auto 0;
