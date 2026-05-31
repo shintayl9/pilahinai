@@ -29,7 +29,7 @@ app.use("/feedback", feedbackRoutes);
 
 // route test
 app.get("/", (req, res) => {
-    res.send("Back-End EcoSortAI berjalan");
+    res.send("Back-End PilahinAI berjalan");
 });
 
 pool.connect()

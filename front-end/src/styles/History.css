@@ -120,12 +120,9 @@
 }
 
 /* ===== WRAPPER ===== */
-
 .history-wrapper {
   position: relative;
-
-  max-width: 760px;
-
+  max-width: 900px;
   margin: auto;
 }
 
@@ -439,15 +436,6 @@
 }
 
 /* ===== ORGANIK ===== */
-.history-category.organic {
-  color: #2e7d32;
-}
-
-.history-category.organic .dot {
-  background: #2e7d32;
-}
-
-/* ===== ORGANIK INDONESIA ===== */
 .history-category.organik {
   color: #2e7d32;
 }
@@ -456,27 +444,69 @@
   background: #2e7d32;
 }
 
-/* ===== ANORGANIK ===== */
-.history-category.recyclable,
-.history-category.plastik,
-.history-category.kaca,
-.history-category.logam,
-.history-category.kardus,
-.history-category.kertas {
-  color: #d48806;
+.history-category.organic {
+  color: #2e7d32;
 }
 
-.history-category.recyclable .dot,
-.history-category.plastik .dot,
-.history-category.kaca .dot,
-.history-category.logam .dot,
-.history-category.kardus .dot,
+.history-category.organic .dot {
+  background: #2e7d32;
+}
+
+/* ===== PLASTIK ===== */
+.history-category.plastik {
+  color: #ef6c00;
+}
+
+.history-category.plastik .dot {
+  background: #ef6c00;
+}
+
+/* ===== KERTAS ===== */
+.history-category.kertas {
+  color: #00897b;
+}
+
 .history-category.kertas .dot {
-  background: #d48806;
+  background: #00897b;
+}
+
+/* ===== KARDUS ===== */
+.history-category.kardus {
+  color: #8d6e63;
+}
+
+.history-category.kardus .dot {
+  background: #8d6e63;
+}
+
+/* ===== KACA ===== */
+.history-category.kaca {
+  color: #1e88e5;
+}
+
+.history-category.kaca .dot {
+  background: #1e88e5;
+}
+
+/* ===== LOGAM ===== */
+.history-category.logam {
+  color: #5e35b1;
+}
+
+.history-category.logam .dot {
+  background: #5e35b1;
+}
+
+/* ===== RECYCLABLE ===== */
+.history-category.recyclable {
+  color: #00838f;
+}
+
+.history-category.recyclable .dot {
+  background: #00838f;
 }
 
 /* ===== RESIDU ===== */
-
 .history-category.residu {
   color: #757575;
 }
@@ -486,11 +516,12 @@
 }
 
 /* ===== B3 ===== */
-
+.history-category.b3,
 .history-category.hazard {
   color: #c62828;
 }
 
+.history-category.b3 .dot,
 .history-category.hazard .dot {
   background: #c62828;
 }
@@ -506,27 +537,17 @@
 /* ===== BUTTONS ===== */
 .slider-buttons button {
   position: absolute;
-
   top: 50%;
-
   transform: translateY(-50%);
-
   width: 50px;
   height: 50px;
-
   border: none;
-
   border-radius: 50%;
-
   background: white;
-
   box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.08);
-
   cursor: pointer;
-
   transition: 0.3s ease;
-
   z-index: 10;
 }
 
@@ -538,15 +559,15 @@
 }
 
 /* ===== LEFT ===== */
-
 .left-btn {
-  left: -85px;
+  left: -5px;
+  transform: translateY(-50%);
 }
 
 /* ===== RIGHT ===== */
-
 .right-btn {
-  right: -85px;
+  right: -5px;
+  transform: translateY(-50%);
 }
 
 /* ===== EMPTY ===== */
@@ -660,7 +681,6 @@
 }
 
 /* ===== POPUP ANIMATION ===== */
-
 @keyframes popup {
 
   from {
@@ -679,9 +699,7 @@
 }
 
 /* ===== RESPONSIVE ===== */
-
 @media (max-width: 768px) {
-
   .history-page h1 {
     font-size: 42px;
 
@@ -719,16 +737,20 @@
     max-width: 320px;
   }
 
+  .slider-buttons button {
+    width: 42px;
+    height: 42px;
+  }
+
   .left-btn {
-    left: -10px;
+    left: 8px;
   }
 
   .right-btn {
-    right: -10px;
+    right: 8px;
   }
 
   .empty-text {
     grid-column: span 1;
   }
 }
-

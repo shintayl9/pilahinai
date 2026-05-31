@@ -7,14 +7,14 @@ function HowItWorks() {
                 <div className="wrapper">
                     <div className="howitworks-hero-content">
                         <div className="howitworks-hero-text">
-                            <h1>EcoSortAI</h1>
+                            <h1>PilahinAI</h1>
                             <p>
                                 Platform berbasis AI untuk klasifikasi sampah dan solusi pengelolaannya yang cerdas.
                             </p>
                             <button className="howitworks-cta-button">Cek Sampahmu disini!</button>
                         </div>
                         <div className="howitworks-hero-image">
-                            <img src="/logo-removebg-preview.png" alt="Logo" />
+                            <img src="/trash.png" alt="Logo" />
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@ function HowItWorks() {
 
             <div className="steps-title-wrapper">
                 <div className="wrapper">
-                    <h2 className="steps-title">Cara Kerja EcoSortAI</h2>
+                    <h2 className="steps-title">Cara Kerja PilahinAI</h2>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@ function HowItWorks() {
                         <div className="step-number">1</div>
                         <div className="step-content">
                             <h2>Upload Gambar</h2>
-                            <p>Upload gambar sampah yang ingin kamu klasifikasikan melalui halaman upload EcoSortAI. Sistem mendukung berbagai jenis gambar sampah seperti organik, anorganik, residu, maupun limbah B3. Setelah gambar dipilih, pengguna dapat langsung mengirim gambar untuk diproses oleh AI.
+                            <p>Upload gambar sampah yang ingin kamu klasifikasikan melalui halaman upload PilahinAI. Sistem mendukung berbagai jenis gambar sampah seperti organik, anorganik, residu, maupun limbah B3. Setelah gambar dipilih, pengguna dapat langsung mengirim gambar untuk diproses oleh AI.
                             </p>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ function HowItWorks() {
                     <div className="step-item step-right">
                         <div className="step-content">
                             <h2>AI Menganalisis</h2>
-                            <p>EcoSortAI akan memproses gambar menggunakan teknologi Artificial Intelligence untuk mengenali jenis sampah berdasarkan bentuk, warna, dan karakteristik objek pada gambar. Proses analisis dilakukan secara otomatis dalam beberapa detik menggunakan model machine learning yang telah dilatih sebelumnya.
+                            <p>PilahinAI akan memproses gambar menggunakan teknologi Artificial Intelligence untuk mengenali jenis sampah berdasarkan bentuk, warna, dan karakteristik objek pada gambar. Proses analisis dilakukan secara otomatis dalam beberapa detik menggunakan model machine learning yang telah dilatih sebelumnya.
                             </p>
                         </div>
                         <div className="step-number">2</div>

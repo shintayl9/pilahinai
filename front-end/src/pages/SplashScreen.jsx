@@ -76,10 +76,9 @@ function SplashScreen() {
       <div className="splash-content">
 
         {/* ===== LOGO ===== */}
-
         <img
-          src="/logo-removebg-preview.png"
-          alt="EcoSortAI"
+          src="/trash.png"
+          alt="PilahinAI"
           className="splash-logo"
         />
 
@@ -100,7 +99,7 @@ function SplashScreen() {
 
           Mulai langkah kecilmu untuk
           bumi yang lebih bersih bersama
-          EcoSortAI 
+          PilahinAI 
 
         </p>
 

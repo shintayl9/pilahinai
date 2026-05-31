@@ -46,24 +46,6 @@ function Hasil() {
   };
 
   const cssCategory = normalizeCategory(aiCategory)?.trim().toLowerCase();
-  
-
-  const categoryMapping = {
-    organic: "Organik",
-    plastik: "Anorganik",
-    kaca: "Anorganik",
-    logam: "Anorganik",
-    kardus: "Anorganik",
-    kertas: "Anorganik",
-    recyclable: "Recyclable",
-    residu: "Residu",
-    hazard: "B3"
-  };
-
-  const frontendCategory =
-    categoryMapping[aiCategory] ||
-    categoryMapping[cssCategory] ||
-    aiCategory;
 
   // DATA DARI HALAMAN SEBELUMNYA
   const [hasilDariAI, setHasilDariAI] =
@@ -96,39 +78,6 @@ function Hasil() {
 
   const [isRefreshing, setIsRefreshing] =
     useState(false);
-
-  // DATA KATEGORI
-  const kategoriData = {
-    organik: {
-      title: "Kategori Organik",
-      description:
-        "Sampah organik merupakan sampah yang berasal dari makhluk hidup seperti sisa makanan, daun, ranting, dan bahan alami lainnya yang mudah terurai secara alami oleh mikroorganisme."
-    },
-
-    anorganik: {
-      title: "Kategori Anorganik",
-      description:
-        "Sampah anorganik merupakan sampah yang sulit terurai secara alami dan umumnya berasal dari bahan non-hayati seperti plastik, kaca, logam, kertas, dan kardus. Jenis sampah ini dapat dikelola melalui proses daur ulang."
-    },
-
-    residu: {
-      title: "Kategori Residu",
-      description:
-        "Sampah residu adalah sampah yang tidak dapat didaur ulang atau diolah kembali sehingga memerlukan penanganan khusus sebelum dibuang ke tempat pembuangan akhir."
-    },
-
-    b3: {
-      title: "Kategori B3",
-      description:
-        "Sampah B3 (Bahan Berbahaya dan Beracun) merupakan limbah yang dapat membahayakan kesehatan manusia maupun lingkungan sehingga memerlukan penanganan khusus."
-    },
-
-    recyclable: {
-      title: "Kategori Daur ulang",
-      description:
-        "Sampah recyclable adalah jenis sampah yang masih dapat di daur ulang dan diolah kembali menjadi produk baru yang bermanfaat"
-    }
-  };
 
   // DATA HASIL
   const hasilData = {
@@ -558,6 +507,7 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
         "Meningkatkan nilai ekonomi melalui kegiatan daur ulang serta mendukung ekonomi sirkular yang berkelanjutan."
       ]
     },
+
     residu: {
       kategori: "Residu",
 
@@ -598,7 +548,6 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
   };
 
   const data = hasilData[cssCategory];
-  const kategoriInfo = kategoriData[cssCategory];
 
   // ===== CHECK FEEDBACK =====
   useEffect(() => {
@@ -745,7 +694,7 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
       {/* HEADER */}
       <div className="hasil-header">
 
-        <h1>EcoSortAI</h1>
+        <h1>PilahinAI</h1>
 
       </div>
 
@@ -755,7 +704,7 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
         <h2>Hasil Klasifikasi AI</h2>
 
         <p>
-          EcoSortAI berhasil menganalisis
+          PilahinAI berhasil menganalisis
           gambar sampah yang kamu upload
         </p>
 
@@ -774,10 +723,6 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
 
       {/* BADGE */}
       <div className="badge-group">
-
-        <span className={`badge kategori ${cssCategory}`}>
-          Kategori: {frontendCategory}
-        </span>
 
         <span className={`badge jenis ${cssCategory}`}>
           Jenis: {resultData?.category}
@@ -839,10 +784,9 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
 
         {/* RESULT */}
         <div className="info-box">
-          <h3>{data?.result}</h3>
-          <p>
-            {kategoriInfo?.description}
-          </p>
+          <h3>
+            Foto yang kamu kirim termasuk jenis sampah {resultData?.category}
+          </h3>
         </div>
 
         {/* MODERN RESULT CARD */}
@@ -950,12 +894,13 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
         </div>
       </div>
 
+
       {/* FEEDBACK */}
       <div className="feedback-box">
 
         <p className="feedback-title">
           Apakah Anda puas dengan hasil
-          EcoSortAI?
+          PilahinAI?
         </p>
 
         <div className="feedback-icons">
@@ -1028,13 +973,15 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
       </div>
 
       {/* NOTIFICATION */}
-      {showNotif && (
-        <div className="feedback-notif">
-          Feedback berhasil dikirim
-        </div>
-      )}
+      {
+        showNotif && (
+          <div className="feedback-notif">
+            Feedback berhasil dikirim
+          </div>
+        )
+      }
 
-    </div>
+    </div >
   );
 }
 

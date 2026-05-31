@@ -58,7 +58,7 @@ function Login() {
 
         <div className="login-left">
 
-          <h1>EcoSortAI</h1>
+          <h1>PilahinAI</h1>
 
           <p>
             Kelola hasil klasifikasi

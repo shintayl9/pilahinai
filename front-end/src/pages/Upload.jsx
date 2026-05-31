@@ -22,7 +22,11 @@ function Upload() {
 
     try {
 
-      navigate("/loading");
+      navigate("/loading", {
+        state: {
+          imagePreview: image.preview
+        }
+      });
 
       const formData =
         new FormData();
@@ -68,6 +72,7 @@ function Upload() {
           }
         );
 
+      // UPDATE DATA HASILNYA
       navigate("/loading", {
         state: {
           imagePreview:
@@ -225,7 +230,7 @@ function Upload() {
       <div className="upload-header">
 
         <h1>
-          EcoSortAI
+          PilahinAI
         </h1>
 
       </div>

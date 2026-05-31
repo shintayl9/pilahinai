@@ -258,7 +258,7 @@ function History() {
 
           <p className="history-subtitle">
             Semua gambar yang pernah dicek
-            oleh EcoSortAI
+            oleh PilahinAI
           </p>
 
         </div>
@@ -554,7 +554,7 @@ function History() {
             </h3>
 
             <p>
-              Semua riwayat klasifikasi berdasarkan gambar yang dicek oleh EcoShortAI akan
+              Semua riwayat klasifikasi berdasarkan gambar yang dicek oleh PilahinAI akan
               dihapus permanen.
             </p>
 

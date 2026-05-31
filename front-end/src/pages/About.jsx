@@ -48,11 +48,11 @@ const teamData = [
     name: "Muhammad Jumail Ilham Sahupula",
     kampus: "Universitas Darwan Ali",
     path: "AI Engineer",
-    photo: "jumail.jpg",
+    photo: "jumail.jpeg",
 
-    instagram:"https://instagram.com/wandasvt", 
-    email:"mailto:wandaforone@gmail.com",
-    linkedin:"https://www.linkedin.com/in/wanda-safitri-01295b3a2/",
+    instagram:"https://www.instagram.com/anakayam.45/", 
+    email:"mailto:sahupalamjumaililham@gmail.com",
+    linkedin:"https://www.linkedin.com/in/jumail-ilham",
   },
   {
     name: "Bili Ramdani",
@@ -72,7 +72,7 @@ function About() {
 
       {/* HEADER */}
       <div className="about-header">
-        <h1>About EcoShortAI</h1>
+        <h1>About PilahinAI</h1>
 
         {/* ICON */}
         <img
@@ -98,9 +98,9 @@ function About() {
       <div className="about-content">
 
         <section className="about-section">
-          <h2>EcoSortAI</h2>
+          <h2>PilahinAI</h2>
           <p>
-            EcoSortAI adalah platform berbasis Artificial Intelligence yang
+            PilahinAI adalah platform berbasis Artificial Intelligence yang
             membantu mengklasifikasikan jenis sampah melalui gambar.
             Pengguna dapat mengetahui jenis sampah serta cara pengolahannya
             secara cepat dan mudah.

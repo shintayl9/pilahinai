@@ -11,7 +11,7 @@ function Home() {
                 <div className="wrapper">
                     <div className="hero-content">
                         <div className="hero-text">
-                            <h1>EcoSortAI</h1>
+                            <h1>PilahinAI</h1>
                             <p>
                                 Platform berbasis AI untuk klasifikasi sampah dan solusi pengelolaannya yang cerdas.
                             </p>
@@ -20,7 +20,7 @@ function Home() {
                             </Link>
                         </div>
                         <div className="hero-image">
-                            <img src="/logo-removebg-preview.png" alt="Logo" />
+                            <img src="/trash.png" alt="Logo" />
                         </div>
                     </div>
                 </div>
@@ -57,10 +57,10 @@ function Home() {
                 </div>
             </section>
 
-            {/* ECO KNOWLEDGE */}
+            {/* PilahinAI Knowledge */}
             <section className="eco-knowledge">
                 <div className="wrapper">
-                    <h2>ECO Knowledge</h2>
+                    <h2>PilahinAI Knowledge</h2>
                     <p className="subtitle">Ubah Cara Kamu Melihat Sampah Mulai hari ini</p>
                     <Link to="/upload" onClick={() => window.scrollTo(0, 0)}>
                         <button className="try-btn">Try AI</button>

@@ -119,7 +119,7 @@ function AdminDashboard() {
         <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
 
           <div>
-            <h2>EcoSortAI</h2>
+            <h2>PilahinAI</h2>
             <p className="admin-role">Admin Panel</p>
 
             {/* MENU */}
@@ -180,7 +180,7 @@ function AdminDashboard() {
             <>
               <div className="topbar">
                 <h1 style={{ marginTop: 0 }}>Hello, Admin!👋</h1> {/* tambahan inline style */}
-                <p>Monitoring Klasifikasi EcoSortAI</p>
+                <p>Monitoring Klasifikasi PilahinAI</p>
               </div>
 
               {/* STATS */}

@@ -14,7 +14,7 @@ function Footer() {
         <div className="footer-main-row">
 
           <p className="copyright">
-            EcoSortAI © 2026
+            PilahinAI © 2026
           </p>
 
           <div className="footer-nav-vertical">
