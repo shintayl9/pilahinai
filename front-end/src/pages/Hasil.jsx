@@ -28,38 +28,55 @@ function Hasil() {
   const resultData = location.state?.result;
 
   const aiCategory =
-    location.state?.result?.category?.toLowerCase() || "organic";
+    location.state?.result?.category?.toLowerCase() || "organik";
+
+  const normalizeCategory = (cat) => {
+    if (!cat) return "residu";
+
+    cat = cat.toLowerCase();
+
+    if (cat.includes("organic")) return "organik";
+    if (cat.includes("anorganic") || cat.includes("inorganic") || cat.includes("anorganik")) {
+      return "anorganik";
+    }
+    if (cat === "hazard" || cat === "b3") return "b3";
+    if (cat === "recyclable") return "recyclable";
+
+    return cat;
+  };
+
+  const cssCategory = normalizeCategory(aiCategory)?.trim().toLowerCase();
+  
 
   const categoryMapping = {
     organic: "Organik",
-
     plastik: "Anorganik",
     kaca: "Anorganik",
     logam: "Anorganik",
     kardus: "Anorganik",
     kertas: "Anorganik",
-    recyclable: "Anorganik",
-
+    recyclable: "Recyclable",
     residu: "Residu",
-
     hazard: "B3"
   };
 
   const frontendCategory =
-    categoryMapping[aiCategory] || "Anorganik";
+    categoryMapping[aiCategory] ||
+    categoryMapping[cssCategory] ||
+    aiCategory;
 
   // DATA DARI HALAMAN SEBELUMNYA
   const [hasilDariAI, setHasilDariAI] =
     useState(aiCategory);
 
   useEffect(() => {
-  if (location.state?.result?.category) {
-    const aiResult =
-      location.state.result.category.toLowerCase();
+    if (location.state?.result?.category) {
+      const aiResult =
+        location.state.result.category.toLowerCase();
 
-    setHasilDariAI(aiResult);
-  }
-}, [location.state]);
+      setHasilDariAI(aiResult);
+    }
+  }, [location.state]);
 
   const imageDariAI =
     location.state?.imagePreview ||
@@ -104,6 +121,12 @@ function Hasil() {
       title: "Kategori B3",
       description:
         "Sampah B3 (Bahan Berbahaya dan Beracun) merupakan limbah yang dapat membahayakan kesehatan manusia maupun lingkungan sehingga memerlukan penanganan khusus."
+    },
+
+    recyclable: {
+      title: "Kategori Daur ulang",
+      description:
+        "Sampah recyclable adalah jenis sampah yang masih dapat di daur ulang dan diolah kembali menjadi produk baru yang bermanfaat"
     }
   };
 
@@ -574,9 +597,8 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
     }
   };
 
-  const data = hasilData[hasilDariAI];
-  const kategoriInfo =
-    kategoriData[hasilDariAI];
+  const data = hasilData[cssCategory];
+  const kategoriInfo = kategoriData[cssCategory];
 
   // ===== CHECK FEEDBACK =====
   useEffect(() => {
@@ -753,15 +775,11 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
       {/* BADGE */}
       <div className="badge-group">
 
-        <span
-          className={`badge kategori ${hasilDariAI}`}
-        >
+        <span className={`badge kategori ${cssCategory}`}>
           Kategori: {frontendCategory}
         </span>
 
-        <span
-          className={`badge jenis ${hasilDariAI}`}
-        >
+        <span className={`badge jenis ${cssCategory}`}>
           Jenis: {resultData?.category}
         </span>
 

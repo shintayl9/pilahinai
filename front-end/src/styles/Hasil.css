@@ -86,6 +86,8 @@
   gap: 8px;
 }
 
+
+
 /* ORGANIK */
 .kategori.organik {
   background: #dff3df;
@@ -128,6 +130,16 @@
   background: #c62828;
 }
 
+/* RECYCLABLE */
+.kategori.recyclable {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.kategori.recyclable::before {
+  background: #1565c0;
+}
+
 /* TITIK BADGE */
 
 .kategori::before {
@@ -159,6 +171,36 @@
   background: #ffebee;
   color: #d32f2f;
 }
+.jenis.plastik {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.jenis.kardus {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.jenis.kertas {
+  background: #e8f5e9;
+  color: rgb(152, 176, 182);
+}
+
+.jenis.kaca {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.jenis.logam {
+  background: #ede7f6;
+  color: #4527a0;
+}
+
+.jenis.recyclable {
+  background: #e0f7fa;
+  color: #00838f;
+}
+
 
 /* AKURASI */
 .akurasi {
