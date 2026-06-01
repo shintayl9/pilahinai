@@ -20,6 +20,10 @@ Selain melakukan klasifikasi gambar sampah, PilahinAI juga menyediakan fitur:
 - Informasi edukatif pengolahan limbah ramah lingkungan
 - Beberapa artikel edukasi singkat
 
+![alt text](front-end/public/new-logo-pilahinai.png)
+
+`Sumber gambar: Logo tersebut dibuat menggunakan AI generatif ChatGPT (OpenAI).`
+
 ## Petunjuk Setup Environtment
 
 ### 1. Clone Repository

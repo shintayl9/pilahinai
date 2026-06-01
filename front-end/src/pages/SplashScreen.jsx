@@ -77,7 +77,7 @@ function SplashScreen() {
 
         {/* ===== LOGO ===== */}
         <img
-          src="/trash.png"
+          src="/new-logo-pilahinai.png"
           alt="PilahinAI"
           className="splash-logo"
         />

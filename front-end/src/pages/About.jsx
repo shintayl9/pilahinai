@@ -76,22 +76,10 @@ function About() {
 
         {/* ICON */}
         <img
-          src="/planet-earth.png"
+          src="new-logo-pilahinai.png"
           alt="eco earth"
           className="about-image"
         />
-
-        {/* ATRIBUSI */}
-        <p className="credit">
-          Icon by{" "}
-          <a href="https://www.flaticon.com/authors/freepik" target="_blank">
-            Freepik
-          </a>{" "}
-          from{" "}
-          <a href="https://www.flaticon.com" target="_blank">
-            Flaticon
-          </a>
-        </p>
       </div>
 
       {/* CONTENT */}

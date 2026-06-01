@@ -14,7 +14,7 @@ function HowItWorks() {
                             <button className="howitworks-cta-button">Cek Sampahmu disini!</button>
                         </div>
                         <div className="howitworks-hero-image">
-                            <img src="/trash.png" alt="Logo" />
+                            <img src="/new-logo-pilahinai.png" alt="Logo" />
                         </div>
                     </div>
                 </div>

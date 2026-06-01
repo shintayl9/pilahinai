@@ -20,7 +20,7 @@ function Home() {
                             </Link>
                         </div>
                         <div className="hero-image">
-                            <img src="/trash.png" alt="Logo" />
+                            <img src="/new-logo-pilahinai.png" alt="Logo" />
                         </div>
                     </div>
                 </div>
