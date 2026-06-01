@@ -127,6 +127,7 @@ Selain melakukan klasifikasi gambar sampah, PilahinAI juga menyediakan fitur:
 - Masuk ke folder Machine Learning sebelumnya yang `PilahinAI-AI`, lalu jalankan server dengan mengetik perintah berikut:
     ```bash
     python app.py
+- Pastikan server berjalan di port 5001 dan bertuliskan `===== Model loaded successfully =====`, yang artinya server berhasil dijalankan.
 ### 🚀 Aplikasi siap dijalankan di `http://localhost:5173/` yang sudah dibuka di browser tadi yaa!.
 ### Lalu coba upload foto sampah yang ada di sekitar, kira-kira masuk sampah jenis apa ya?🤔
 
