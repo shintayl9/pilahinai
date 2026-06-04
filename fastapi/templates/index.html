@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentasi API</title>
+</head>
+
+<body>
+    <div>
+        <h3>Testing API</h3>
+        <i id="info" style="color: grey;">RUNNING...</i>
+        <div>
+            <p>URL</p>
+            <div>
+                <input type="text" id="inpt-url">
+                <input type="button" onclick="Send('url')" value="kirim">
+            </div>
+        </div>
+        <br><i>or</i>
+        <div>
+            <p>Gambar</p>
+            <div>
+                <input type="file" id="inpt-image">
+                <input type="button" onclick="Send('image')" value="Upload">
+            </div>
+        </div>
+        <div id="jumpscare"><img src="" alt=""></div>
+    </div>
+
+    <script>
+        info = document.getElementById("info")
+        ip = "http://127.0.0.1:5000/"
+        file = ''
+        function Send(type) {
+            info.textContent = "Processing..."
+            if (type == "url") {
+                Url(document.getElementById("inpt-url"))
+            } else if (type == "image") {
+                Image(document.getElementById("inpt-image"))
+            } else {
+                alert("Illegal Action!")
+            }
+            console.log(file)
+        }
+
+        async function Url(url) {
+            value = url.value
+            if (value.trim() === "") {
+                alert("Data tidak boleh kosong")
+                return
+            }
+
+            const formData = new FormData()
+
+            formData.append('image_url', value)
+            formData.append('session_id', "1945")
+            const data = await Post(formData, "predict_url")
+            if (data !== undefined) {
+                info.textContent = "Done!"
+                alert("Ini adalah gambar: " + data.category + "\nConfidence: " + data.confidence + "%")
+            }
+            setTimeout(() => {
+                info.textContent = "RUNNING..."
+            }, 2000)
+        }
+
+        async function Image(image) {
+            file = image.files[0]
+            if (!file) {
+                alert("Please select an image first")
+                return
+            }
+
+            const formData = new FormData()
+
+            formData.append('file', file)
+            formData.append('session_id', "1945")
+            const data = await Post(formData, "predict_image")
+            if (data !== undefined) {
+                info.textContent = "Done!"
+                alert("Ini adalah gambar: " + data.category + "\nConfidence: " + data.confidence + "%")
+            }
+            setTimeout(() => {
+                info.textContent = "RUNNING..."
+            }, 2000)
+        }
+
+        function Post(formData, path) {
+            return fetch( path, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Error when upload")
+                }
+                return response.json()
+            })
+            .then(data => {
+                console.log("berhasil woi")
+                info.textContent = "Done!"
+                return {
+                    "category": data.category,
+                    "session_id": data.session_id,
+                    "confidence": data.confidence
+                }
+            })
+            .catch(err => {
+                alert("Error: " + err.message)
+                info.textContent = err.message
+            })
+        }
+    </script>
+</body>
+
+</html>

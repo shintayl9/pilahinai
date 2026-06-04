@@ -1,0 +1,104 @@
+import os, io,  numpy as np, requests
+import threading
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
+from PIL import Image
+from tensorflow.keras.models import load_model
+
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = '0'
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = '2'
+
+model = None
+
+kelas = { 0: 'hazard',
+         1: 'kaca',
+         2: 'kardus',
+         3: 'kertas',
+         4: 'logam',
+         5: 'organic',
+         6: 'plastik',
+         7: 'recyclable',
+         8: 'residu'}
+
+try:
+    model = load_model('models/model_ep_33_vacc_0.8826530575752258.keras')
+    print("===== Model loaded successfully =====")
+except Exception as e:
+    print(f"===== Error loading model =====")
+    print(str(e))
+
+
+def process_image(image):
+    image = image.convert("RGB")
+    image = image.resize((224, 224))
+    image_array = np.array(image) / 255.0
+    image_array = np.expand_dims(image_array, axis=0)
+    # Perform prediction using the loaded model
+    # return classes
+    return image_array
+
+
+app = Flask(__name__)
+CORS(app)
+model_locked = threading.Lock()
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+@app.route('/predict_url', methods=['POST'])
+def predict_url():
+    session_id = request.form.get('session_id')
+    image_url = request.form.get('image_url')
+    if not session_id or not image_url:
+        return jsonify({'error': 'Missing session_id or image_url'}), 400
+    
+    try:
+        with model_locked:
+            response = requests.get(image_url)
+            response.raise_for_status()
+            image = Image.open(io.BytesIO(response.content))
+            image_array = process_image(image)
+            history = model.predict(image_array)
+        return jsonify({
+            'category': kelas[history.argmax()-1],
+            'session_id': session_id,
+            'confidence': round(float(np.max(history))*100, 2)
+            }), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/predict_image', methods=['POST'])
+def predict_image():
+    session_id = request.form.get('session_id')
+
+    # if request.content_type not in ['image/jpeg', 'image/png', 'image/jpg']:
+    #     return jsonify({'error': 'Invalid file type'}), 400 // error handling for file type, but currently not working, need to be fixed later
+
+    file = request.files['file']
+
+    if not session_id or not file:
+        return jsonify({'error': 'Missing session_id or file'}), 400
+    
+    try:
+        with model_locked:
+            image_bytes = file.read()
+            image = Image.open(io.BytesIO(image_bytes))
+            image_array = process_image(image)
+            history = model.predict(image_array)
+        return jsonify({
+            'category': kelas[history.argmax()-1],
+            'session_id': session_id,
+            'confidence': round(float(np.max(history))*100, 2)
+            }), 200
+
+    except Exception as e:
+     print("===== ERROR PREDICT IMAGE =====")
+     print(str(e))
+     return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001, debug=True)
+
+# how to run:
+# run this comand: uvicorn app:app --reload
