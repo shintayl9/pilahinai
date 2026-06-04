@@ -39,13 +39,16 @@ Selain melakukan klasifikasi gambar sampah, PilahinAI juga menyediakan fitur:
 ### 4. Install Dependency Front-End
 - Buat new terminal di VSCode, lalu masuk ke folder front-end dengan mengetik perintah **`cd front-end`**
 - Setelah berhasil masuk folder front-end, ketik perintah **`npm install`**
-### 5. Membuat Folder Kosong Uploads
+### 5. Install Dependency Back-End Machine Learning
+- Buat new terminal di VSCode, lalu masuk ke folder fastapi dengan mengetik perintah **`cd fastapi`**
+- Setelah berhasil masuk folder front-end, ketik perintah **`pip install -r requirements.txt`**
+### 6. Membuat Folder Kosong Uploads
 - Di dalam folder `back-end` klik kanan lalu New Folder, beri nama `uploads`
 - Folder tersebut berfungsi untuk menyimpan gambar sementara pada saat loading, sebelum akhirnya tersimpan di database.
-### 6. Membuat File Environtment
+### 7. Membuat File Environtment
 - Di dalam folder `back-end` klik kanan lalu New File, beri nama `.env`
 - Isi file tersebut mengikuti contoh isi `.env.example` yang tersedia dan sesuaikan konfigurasi database dengan perangkat masing-masing.
-### 7. Setup Database
+### 8. Setup Database
 - Pastikan di laptop sudah terinstall `PostgreSQL`, karena databasenya menggunakan `PostgreSQL`. Jika belum, maka install terlebih dahulu.
 - Setelah berhasil install, cari di search windows bernama `pgAdmin 4`, setelah itu create database bernama `pilahinAI`.
 - Lalu masuk ke terminal database yang sudah dibuat tersebut, buat tabel histories dengan mengetikkan perintah berikut:
@@ -101,21 +104,6 @@ Selain melakukan klasifikasi gambar sampah, PilahinAI juga menyediakan fitur:
     FROM information_schema.columns
     WHERE table_name = 'feedbacks';
 
-### 8. Setup Repository Machine Learning
-- Setelah berhasil setup database, langkah selanjutnya adalah setup repository machine learning.
-- Pastikan di perangkat masing-masing telah terinstall `Python` terlebih dahulu.
-- Buat Folder kosong kembali di windows lalu beri nama `PilahinAI-AI` atau sesuai keinginan, klik New Window di VSCode lalu buka folder kosong yang baru dibuat.
-- Cloning repository Machine Learning dengan perintah:
-    ```bash
-    git clone https://github.com/anakayam45/backend-pilahin-AI.git .
-- Perhatikan pada perintah, ada spasi lalu tanda titik di akhir, berfungsi agar hasil cloning masuk ke folder kosong yang sudah dibuat.
-- Install dependency yang dibutuhkan dengan perintah berikut:
-    ```bash
-    pip install -r requirements.txt
-- Setelah berhasil, ketik perintah berikut:
-    ```bash
-    pip install flask-cors
-
 ## Cara Menjalankan Aplikasi
 ### 1. Menjalankan Back-End
 - Masuk ke folder back-end sebelumnya yang `cd back-end`, lalu jalankan server dengan mengetik perintah berikut:
@@ -128,7 +116,7 @@ Selain melakukan klasifikasi gambar sampah, PilahinAI juga menyediakan fitur:
     npm run dev
 - Pastikan Front-End berjalan pada `http://localhost:5173/` dan copy link tersebut di browser untuk melihat web yang sudah dibuat.
 ### 3. Menjalankan Machine Learning
-- Masuk ke folder Machine Learning sebelumnya yang `PilahinAI-AI`, lalu jalankan server dengan mengetik perintah berikut:
+- Masuk ke folder Machine Learning sebelumnya yang `cd fastapi`, lalu jalankan server dengan mengetik perintah berikut:
     ```bash
     python app.py
 - Pastikan server berjalan di port 5001 dan bertuliskan `===== Model loaded successfully =====`, yang artinya server berhasil dijalankan.
