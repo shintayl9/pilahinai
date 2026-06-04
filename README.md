@@ -41,7 +41,7 @@ Selain melakukan klasifikasi gambar sampah, PilahinAI juga menyediakan fitur:
 - Setelah berhasil masuk folder front-end, ketik perintah **`npm install`**
 ### 5. Install Dependency Back-End Machine Learning
 - Buat new terminal di VSCode, lalu masuk ke folder fastapi dengan mengetik perintah **`cd fastapi`**
-- Setelah berhasil masuk folder front-end, ketik perintah **`pip install -r requirements.txt`**
+- Setelah berhasil masuk folder fastapi, ketik perintah **`pip install -r requirements.txt`**
 ### 6. Membuat Folder Kosong Uploads
 - Di dalam folder `back-end` klik kanan lalu New Folder, beri nama `uploads`
 - Folder tersebut berfungsi untuk menyimpan gambar sementara pada saat loading, sebelum akhirnya tersimpan di database.
