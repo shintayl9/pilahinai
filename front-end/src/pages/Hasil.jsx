@@ -467,10 +467,10 @@ Sampah Recyclable adalah material sisa yang telah habis masa pakainya, namun mas
 `,
 
       image:
-        "/recyclable-1.png",
+        "/Recyclable-1.png",
 
       image2:
-        "/recyclable-2.png",
+        "/Recyclable-2.png",
 
       handlingTitle:
         "Berikut adalah tahapan penanganan sampah daur ulang dari rumah hingga siap diolah:",
