@@ -29,9 +29,9 @@ function Footer() {
             </p>
 
             <div className="footer-social-icons">
-              <img src="/icon-instagram.png" alt="Instagram" />
-              <img src="/icon-whatsapp.png" alt="WhatsApp" />
-              <img src="/icon-youtube.png" alt="YouTube" />
+              <a href="https://youtu.be/OHyBfXkTJzA?si=k_FPGRkLIfyUGo18" target="_blank">
+                <img src="/icon-youtube.png" alt="YouTube" />
+              </a>
             </div>
 
           </div>

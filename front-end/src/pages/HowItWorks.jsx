@@ -1,4 +1,5 @@
 import "../styles/howitworks.css"
+import { Link } from "react-router-dom";
 
 function HowItWorks() {
     return (
@@ -11,7 +12,11 @@ function HowItWorks() {
                             <p>
                                 Platform berbasis AI untuk klasifikasi sampah dan solusi pengelolaannya yang cerdas.
                             </p>
-                            <button className="howitworks-cta-button">Cek Sampahmu disini!</button>
+                            <Link to="/upload">
+                                <button className="howitworks-cta-button">
+                                    Cek Sampahmu disini!
+                                </button>
+                            </Link>
                         </div>
                         <div className="howitworks-hero-image">
                             <img src="/new-logo-pilahinai.png" alt="Logo" />
