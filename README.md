@@ -127,3 +127,14 @@ Selain melakukan klasifikasi gambar sampah, PilahinAI juga menyediakan fitur:
 ---
 ## Tautan Model Machine Learning (ML) `Link Google Drive`
 - [Model Machine Learning](https://drive.google.com/drive/folders/1HnERhKYk4vyeFMq_yKjiq--DyF_Afpqv)
+
+## Contributors
+
+| Student ID | Name | Learning Path |
+| :--- | :--- | :--- |
+| CACC620D6X1716 | Nasywa Salsabiila Romadhona | AI Engineer |
+| CACC620D6Y2089 | Muhammad Jumail Ilham Sahupala | AI Engineer |
+| CFCC525D6X0120 | Shinta Yulistiana | Full-Stack Web Developer |
+| CFCC525D6X0203 | Wanda Safitri | Full-Stack Web Developer |
+| CDCC002D6Y2154 | Bili Ramdani | Data Scientist |
+| CDCC525D6X0223 | Nurvi A’Malina | Data Scientist |
